@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     main.cpp \
+    tab_commands.cpp \
     train_imitator.cpp
 
 HEADERS += \
