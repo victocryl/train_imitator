@@ -19,9 +19,7 @@ void train_imitator::tab_commands(void)
     post_time_retr();       // считывание времени отложенного старта
     valid_pwr_400_retr();   // считывание допустимой мощности сети 400 В
     ambient_temp_retr();    // считывание температуры наружного воздуха
-    // счит. смещ. темп. уставки
-
-    // метод считывания битов команд
+    temp_offset_retr();     // считывание сдвига уставки температуры
 
 
 
@@ -219,7 +217,31 @@ void train_imitator::ambient_temp_retr(void)
      }
 }
 
+/* @brief  Метод считывания в массив tx_commands[8] сдвига уставки температуры
+ * @param  None
+ * @retval None
+ */
+void train_imitator::temp_offset_retr(void)
+{
+    // **********  считываем сдвиг  *****************************
+    QString str = ui->lineEdit_17->text();        // забираем текст из строки
+    uint8_t offset = str.toInt(&str_error, 10);  // переводим в int
 
+     // проверяем данные на адекватность
+     if((offset == 0) || (offset > 254))
+     {
+         tx_commands[DH] = tx_commands[DL] = 0; // обуляем все данные
+         ui->label_2->setText("неправильный формат сдвига уставки");
+         ui->label_2->setStyleSheet("QLabel{color: rgb(255, 10, 0); }");  // делаем текст красным
+     }
+     else
+     {  // если прошли проверку
+         tx_commands[DH] = offset;
+
+         ui->label_2->setText("");  // удаляем аварийную надпись
+         ui->label_2->setStyleSheet("QLabel{color: rgb(0, 0, 0); }");  // делаем текст чёрным
+     }
+}
 
 
 
