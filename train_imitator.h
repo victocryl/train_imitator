@@ -24,6 +24,11 @@ public:
 
 private:
 
+Ui::train_imitator *ui;
+
+/*******  вспомогательные переменные *************/
+bool str_error;
+
 /*******  массивы rx, tx can-посылок *************/
     uint8_t tx_time[8];
     uint8_t tx_post_start[8];
@@ -47,12 +52,17 @@ private:
         DATA_NUM
     }TE_canbytes;
 
+/*******  методы ******************************/
+    void can_arrays_init(void); // инициализация can массивов нулями
+    void sys_date_retr(void);   // считывание системной даты
+    void sys_time_retr(void);   // считывание системного времени
 
 
-    void can_arrays_init(void);
+/*******  слоты *******************************/
+private slots:
+    void tab_commands(void);
 
 
 
-    Ui::train_imitator *ui;
 };
 #endif // TRAIN_IMITATOR_H

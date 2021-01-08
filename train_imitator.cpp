@@ -9,7 +9,7 @@ train_imitator::train_imitator(QWidget *parent)
 
     can_arrays_init();  // инициализируем нулями массивы can
 
-
+    connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(tab_commands())); // кнопка "задать параметры"
 
 
 }
