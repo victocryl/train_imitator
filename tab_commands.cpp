@@ -13,10 +13,10 @@
  */
 void train_imitator::tab_commands(void)
 {
-    sys_date_retr();    // считывание системной даты
-    sys_time_retr();    // считывание системного времени
+    sys_date_retr();        // считывание системной даты
+    sys_time_retr();        // считывание системного времени
+    sys_post_date_retr();  // считывание даты отложенного старта
 
-    // ф-ия считывания даты отл. старта
     // ф-ия считывания времени отл. старта
     // считывания мощности 400В
     // счит. темп. наруж. воздуха
@@ -52,10 +52,10 @@ void train_imitator::sys_date_retr(void)
      }
      else
      {  // если прошли проверку
-         tx_time[BL] = day;
-         tx_time[BH] = month;
-         tx_time[AL] = year;
          tx_time[AH] = (year>>8);
+         tx_time[AL] = year;
+         tx_time[BH] = month;
+         tx_time[BL] = day;
 
          ui->label_2->setText("");  // удаляем аварийную надпись
          ui->label_2->setStyleSheet("QLabel{color: rgb(0, 0, 0); }");  // делаем текст чёрным
@@ -99,7 +99,38 @@ void train_imitator::sys_time_retr(void)
      }
 }
 
+/* @brief  Метод считывания в массив tx_time[8] даты отложенного старта
+ * @param  None
+ * @retval None
+ */
+void train_imitator::sys_post_date_retr(void)
+{
+    // **********  считываем дату (день, месяц, год)  *****************************
+    QString str = ui->lineEdit_8->text();     // забираем текст из строки день
+    uint8_t day = str.toInt(&str_error, 10);  // переводим в int
+    str = ui->lineEdit_9->text();             // забираем месяц
+    uint8_t month = str.toInt(&str_error, 10);
+    str = ui->lineEdit_10->text();             // забираем год
+    uint16_t year = str.toInt(&str_error, 10);
 
+     // проверяем данные на адекватность
+     if((day == 0) || (day > 31) || (month == 0) || (month > 12) || (year == 0) || (year < 2021) || (year > 2100))
+     {
+         tx_post_start[AH] = tx_post_start[AL] = tx_post_start[BH] = tx_post_start[BL] = 0; // обуляем все данные
+         ui->label_2->setText("неправильный формат числа, месяца или года системной даты");
+         ui->label_2->setStyleSheet("QLabel{color: rgb(255, 10, 0); }");  // делаем текст красным
+     }
+     else
+     {  // если прошли проверку
+         tx_post_start[AH] = (year>>8);
+         tx_post_start[AL] = year;
+         tx_post_start[BH] = month;
+         tx_post_start[BL] = day;
+
+         ui->label_2->setText("");  // удаляем аварийную надпись
+         ui->label_2->setStyleSheet("QLabel{color: rgb(0, 0, 0); }");  // делаем текст чёрным
+     }
+}
 
 
 

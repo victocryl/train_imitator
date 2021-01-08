@@ -53,9 +53,10 @@ bool str_error;
     }TE_canbytes;
 
 /*******  методы ******************************/
-    void can_arrays_init(void); // инициализация can массивов нулями
-    void sys_date_retr(void);   // считывание системной даты
-    void sys_time_retr(void);   // считывание системного времени
+    void can_arrays_init(void);     // инициализация can массивов нулями
+    void sys_date_retr(void);       // считывание системной даты
+    void sys_time_retr(void);       // считывание системного времени
+    void sys_post_date_retr(void); // считывание даты отложенного старта
 
 
 /*******  слоты *******************************/
