@@ -43,7 +43,6 @@ void train_imitator::sys_date_retr(void)
     str = ui->lineEdit_7->text();             // забираем год
     uint16_t year = str.toInt(&str_error, 10);
 
-
      // проверяем данные на адекватность
      if((day == 0) || (day > 31) || (month == 0) || (month > 12) || (year == 0) || (year < 2021) || (year > 2100))
      {
@@ -65,13 +64,39 @@ void train_imitator::sys_date_retr(void)
 }
 
 
-/* @brief  Метод считывания в массив tx_time[8] системной даты
+/* @brief  Метод считывания в массив tx_time[8] системного времени
  * @param  None
  * @retval None
  */
 void train_imitator::sys_time_retr(void)
 {
+    // **********  считываем время (часы, мин., сек., сотые доли сек.)  *****************************
+    QString str = ui->lineEdit->text();     // забираем текст из строки час
+    uint8_t hour = str.toInt(&str_error, 10);  // переводим в int
+    str = ui->lineEdit_2->text();             // забираем минуты
+    uint8_t min = str.toInt(&str_error, 10);
+    str = ui->lineEdit_3->text();             // забираем секунды
+    uint16_t sec = str.toInt(&str_error, 10);
+    str = ui->lineEdit_4->text();             // забираем сот. доли секунды
+    uint16_t h_of_sec = str.toInt(&str_error, 10);
 
+     // проверяем данные на адекватность
+     if((hour == 0) || (hour > 12) || (min == 0) || (min > 59) || (sec == 0) || (sec > 59) || (h_of_sec == 0) || (h_of_sec > 99))
+     {
+         tx_time[CH] = tx_time[CL] = tx_time[DH] = tx_time[DL] = 0; // обуляем все данные
+         ui->label_2->setText("неправильный формат часов, мин., сек. или сот. долей сек. системного времени");
+         ui->label_2->setStyleSheet("QLabel{color: rgb(255, 10, 0); }");  // делаем текст красным
+     }
+     else
+     {  // если прошли проверку
+         tx_time[CH] = min;
+         tx_time[CL] = hour;
+         tx_time[DH] = h_of_sec;
+         tx_time[DL] = sec;
+
+         ui->label_2->setText("");  // удаляем аварийную надпись
+         ui->label_2->setStyleSheet("QLabel{color: rgb(0, 0, 0); }");  // делаем текст чёрным
+     }
 }
 
 
