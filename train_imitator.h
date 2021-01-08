@@ -3,6 +3,13 @@
 
 #include <QWidget>
 
+#define ID_TIME         0x10   // посылка даты и времени (для линии В 0x60)
+#define ID_POST_START   0x50   // посылка отложенного старта (для линии В 0x90)
+#define ID_COMMANDS     0x51   // посылка с командами для УКВ (для линии В 0x91)
+#define ID_DIAG         0x1F4  // посылка с диагностическими статусами (для линии В 0x200)
+#define ID_FAILS        0x1F5  // посылка с ошибками УКВ (для линии В 0x201)
+#define ID_SERVICE      0x1F6  // посылка с сервисной информацией (для линии В 0x202)
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class train_imitator; }
 QT_END_NAMESPACE
@@ -25,6 +32,22 @@ private:
     uint8_t rx_failuries[8];
     uint8_t rx_service_info[8];
     uint8_t init_array[8];
+
+/*******  enum байтов посылок Can *************/
+    typedef enum canbytes
+    {
+        AH,
+        AL,
+        BH,
+        BL,
+        CH,
+        CL,
+        DH,
+        DL,
+        DATA_NUM
+    }TE_canbytes;
+
+
 
     void can_arrays_init(void);
 
