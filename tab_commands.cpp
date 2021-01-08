@@ -15,9 +15,9 @@ void train_imitator::tab_commands(void)
 {
     sys_date_retr();        // считывание системной даты
     sys_time_retr();        // считывание системного времени
-    sys_post_date_retr();  // считывание даты отложенного старта
+    post_date_retr();   // считывание даты отложенного старта
+    post_time_retr();   // считывание времени отложенного старта
 
-    // ф-ия считывания времени отл. старта
     // считывания мощности 400В
     // счит. темп. наруж. воздуха
     // счит. смещ. темп. уставки
@@ -81,7 +81,7 @@ void train_imitator::sys_time_retr(void)
     uint16_t h_of_sec = str.toInt(&str_error, 10);
 
      // проверяем данные на адекватность
-     if((hour == 0) || (hour > 12) || (min == 0) || (min > 59) || (sec == 0) || (sec > 59) || (h_of_sec == 0) || (h_of_sec > 99))
+     if((hour > 23) || (min == 0) || (min > 59) || (sec == 0) || (sec > 59) || (h_of_sec == 0) || (h_of_sec > 99))
      {
          tx_time[CH] = tx_time[CL] = tx_time[DH] = tx_time[DL] = 0; // обуляем все данные
          ui->label_2->setText("неправильный формат часов, мин., сек. или сот. долей сек. системного времени");
@@ -99,11 +99,11 @@ void train_imitator::sys_time_retr(void)
      }
 }
 
-/* @brief  Метод считывания в массив tx_time[8] даты отложенного старта
+/* @brief  Метод считывания в массив tx_post_start[8] даты отложенного старта
  * @param  None
  * @retval None
  */
-void train_imitator::sys_post_date_retr(void)
+void train_imitator::post_date_retr(void)
 {
     // **********  считываем дату (день, месяц, год)  *****************************
     QString str = ui->lineEdit_8->text();     // забираем текст из строки день
@@ -132,7 +132,40 @@ void train_imitator::sys_post_date_retr(void)
      }
 }
 
+/* @brief  Метод считывания в массив tx_post_start[8] времени отложенного старта
+ * @param  None
+ * @retval None
+ */
+void train_imitator::post_time_retr(void)
+{
+    // **********  считываем время (часы, мин., сек., сотые доли сек.)  *****************************
+    QString str = ui->lineEdit_11->text();     // забираем текст из строки час
+    uint8_t hour = str.toInt(&str_error, 10);  // переводим в int
+    str = ui->lineEdit_12->text();             // забираем минуты
+    uint8_t min = str.toInt(&str_error, 10);
+    str = ui->lineEdit_13->text();             // забираем секунды
+    uint16_t sec = str.toInt(&str_error, 10);
+    str = ui->lineEdit_14->text();             // забираем сот. доли секунды
+    uint16_t h_of_sec = str.toInt(&str_error, 10);
 
+     // проверяем данные на адекватность
+     if((hour > 23) || (min == 0) || (min > 59) || (sec == 0) || (sec > 59) || (h_of_sec == 0) || (h_of_sec > 99))
+     {
+         tx_post_start[CH] = tx_post_start[CL] = tx_post_start[DH] = tx_post_start[DL] = 0; // обуляем все данные
+         ui->label_2->setText("неправильный формат часов, мин., сек. или сот. долей сек. системного времени");
+         ui->label_2->setStyleSheet("QLabel{color: rgb(255, 10, 0); }");  // делаем текст красным
+     }
+     else
+     {  // если прошли проверку
+         tx_post_start[CH] = min;
+         tx_post_start[CL] = hour;
+         tx_post_start[DH] = h_of_sec;
+         tx_post_start[DL] = sec;
+
+         ui->label_2->setText("");  // удаляем аварийную надпись
+         ui->label_2->setStyleSheet("QLabel{color: rgb(0, 0, 0); }");  // делаем текст чёрным
+     }
+}
 
 
 
