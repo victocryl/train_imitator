@@ -15,10 +15,10 @@ void train_imitator::tab_commands(void)
 {
     sys_date_retr();        // считывание системной даты
     sys_time_retr();        // считывание системного времени
-    post_date_retr();   // считывание даты отложенного старта
-    post_time_retr();   // считывание времени отложенного старта
+    post_date_retr();       // считывание даты отложенного старта
+    post_time_retr();       // считывание времени отложенного старта
+    valid_pwr_400();        // считывание допустимой мощности сети 400 В
 
-    // считывания мощности 400В
     // счит. темп. наруж. воздуха
     // счит. смещ. темп. уставки
 
@@ -166,6 +166,38 @@ void train_imitator::post_time_retr(void)
          ui->label_2->setStyleSheet("QLabel{color: rgb(0, 0, 0); }");  // делаем текст чёрным
      }
 }
+
+/* @brief  Метод считывания в массив tx_commands[8] допустимой мощности сети 400 В
+ * @param  None
+ * @retval None
+ */
+void train_imitator::valid_pwr_400(void)
+{
+    // **********  считываем мощность  *****************************
+    QString str = ui->lineEdit_15->text();    // забираем текст из строки
+    uint8_t pwr = str.toInt(&str_error, 10);  // переводим в int
+
+     // проверяем данные на адекватность
+     if((pwr == 0) || (pwr > 254))
+     {
+         tx_commands[BH] = tx_commands[BL] = 0; // обуляем все данные
+         ui->label_2->setText("неправильный формат числа, месяца или года системной даты");
+         ui->label_2->setStyleSheet("QLabel{color: rgb(255, 10, 0); }");  // делаем текст красным
+     }
+     else
+     {  // если прошли проверку
+         tx_commands[BH] = pwr;
+
+         ui->label_2->setText("");  // удаляем аварийную надпись
+         ui->label_2->setStyleSheet("QLabel{color: rgb(0, 0, 0); }");  // делаем текст чёрным
+     }
+}
+
+
+
+
+
+
 
 
 

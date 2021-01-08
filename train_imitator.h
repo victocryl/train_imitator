@@ -56,8 +56,9 @@ bool str_error;
     void can_arrays_init(void);     // инициализация can массивов нулями
     void sys_date_retr(void);       // считывание системной даты
     void sys_time_retr(void);       // считывание системного времени
-    void post_date_retr(void);  // считывание даты отложенного старта
-    void post_time_retr(void);  // считывание времени отложенного старта
+    void post_date_retr(void);      // считывание даты отложенного старта
+    void post_time_retr(void);      // считывание времени отложенного старта
+    void valid_pwr_400(void);       // считывание допустимой мощности сети 400 В
 
 
 /*******  слоты *******************************/
