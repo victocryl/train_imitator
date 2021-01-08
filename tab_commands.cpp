@@ -17,9 +17,8 @@ void train_imitator::tab_commands(void)
     sys_time_retr();        // считывание системного времени
     post_date_retr();       // считывание даты отложенного старта
     post_time_retr();       // считывание времени отложенного старта
-    valid_pwr_400();        // считывание допустимой мощности сети 400 В
-
-    // счит. темп. наруж. воздуха
+    valid_pwr_400_retr();   // считывание допустимой мощности сети 400 В
+    ambient_temp_retr();    // считывание температуры наружного воздуха
     // счит. смещ. темп. уставки
 
     // метод считывания битов команд
@@ -171,7 +170,7 @@ void train_imitator::post_time_retr(void)
  * @param  None
  * @retval None
  */
-void train_imitator::valid_pwr_400(void)
+void train_imitator::valid_pwr_400_retr(void)
 {
     // **********  считываем мощность  *****************************
     QString str = ui->lineEdit_15->text();    // забираем текст из строки
@@ -181,12 +180,39 @@ void train_imitator::valid_pwr_400(void)
      if((pwr == 0) || (pwr > 254))
      {
          tx_commands[BH] = tx_commands[BL] = 0; // обуляем все данные
-         ui->label_2->setText("неправильный формат числа, месяца или года системной даты");
+         ui->label_2->setText("неправильный формат мощности (нужно целое число меньше 255)");
          ui->label_2->setStyleSheet("QLabel{color: rgb(255, 10, 0); }");  // делаем текст красным
      }
      else
      {  // если прошли проверку
          tx_commands[BH] = pwr;
+
+         ui->label_2->setText("");  // удаляем аварийную надпись
+         ui->label_2->setStyleSheet("QLabel{color: rgb(0, 0, 0); }");  // делаем текст чёрным
+     }
+}
+
+/* @brief  Метод считывания в массив tx_commands[8] температуры окружающей среды
+ * @param  None
+ * @retval None
+ */
+void train_imitator::ambient_temp_retr(void)
+{
+    // **********  считываем температуру  *****************************
+    QString str = ui->lineEdit_16->text();    // забираем текст из строки
+    uint16_t t = str.toInt(&str_error, 10);  // переводим в int
+
+     // проверяем данные на адекватность
+     if((t == 0) || (t > 850))
+     {
+         tx_commands[CH] = tx_commands[CL] = 0; // обуляем все данные
+         ui->label_2->setText("неправильный формат температуры (нужно целое число меньше 850)");
+         ui->label_2->setStyleSheet("QLabel{color: rgb(255, 10, 0); }");  // делаем текст красным
+     }
+     else
+     {  // если прошли проверку
+         tx_commands[CH] = t>>8;
+         tx_commands[CL] = t;
 
          ui->label_2->setText("");  // удаляем аварийную надпись
          ui->label_2->setStyleSheet("QLabel{color: rgb(0, 0, 0); }");  // делаем текст чёрным
