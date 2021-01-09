@@ -14,6 +14,7 @@ SOURCES += \
     train_imitator.cpp
 
 HEADERS += \
+    bits.h \
     train_imitator.h
 
 FORMS += \

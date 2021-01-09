@@ -4,6 +4,7 @@
 
 #include "train_imitator.h"
 #include "ui_train_imitator.h"
+#include "bits.h"
 
 /* @brief  Метод слота на нажатие кнопки "Задать параметры"
  * @detail По нажатию кнопки происходит считывание в 3-и tx-массива
