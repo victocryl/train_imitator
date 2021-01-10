@@ -9,7 +9,7 @@
 #define CMD_RESET                   0x00
 #define CMD_OFF                     0x00
 #define CMD_ON                      0x01
-#define CMD_OTST_VO_VKL_SOST        0x02
+#define CMD_OTSTOY                  0x02
 #define CMD_MOYKA                   0x03
 #define BIT_STATION                 (1<<4)
 #define BIT_TONNEL                  (1<<5)
