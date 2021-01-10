@@ -15,7 +15,7 @@
  * @param  None
  * @retval None
  */
-void train_imitator::sys_date_retr(void)
+uint8_t train_imitator::sys_date_retr(void)
 {
     // **********  считываем дату (день, месяц, год)  *****************************
     QString str = ui->lineEdit_5->text();     // забираем текст из строки день
@@ -29,8 +29,7 @@ void train_imitator::sys_date_retr(void)
      if((day == 0) || (day > 31) || (month == 0) || (month > 12) || (year == 0) || (year < 2021) || (year > 2100))
      {
          tx_time[AH] = tx_time[AL] = tx_time[BH] = tx_time[BL] = 0; // обуляем все данные
-         ui->label_2->setText("неправильный формат числа, месяца или года системной даты");
-         ui->label_2->setStyleSheet("QLabel{color: rgb(255, 10, 0); }");  // делаем текст красным
+         return ER_SYS_DATA;
      }
      else
      {  // если прошли проверку
@@ -39,10 +38,9 @@ void train_imitator::sys_date_retr(void)
          tx_time[BH] = month;
          tx_time[BL] = day;
 
-         ui->label_2->setText("");  // удаляем аварийную надпись
-         ui->label_2->setStyleSheet("QLabel{color: rgb(0, 0, 0); }");  // делаем текст чёрным
+         return NO_INPUT_ERRORS;
      }
-//        ui->label_2->setText(QString::number(date));
+     return NO_INPUT_ERRORS;
 }
 
 
@@ -50,7 +48,7 @@ void train_imitator::sys_date_retr(void)
  * @param  None
  * @retval None
  */
-void train_imitator::sys_time_retr(void)
+uint8_t train_imitator::sys_time_retr(void)
 {
     // **********  считываем время (часы, мин., сек., сотые доли сек.)  *****************************
     QString str = ui->lineEdit->text();     // забираем текст из строки час
@@ -65,9 +63,8 @@ void train_imitator::sys_time_retr(void)
      // проверяем данные на адекватность
      if((hour > 23) || (min == 0) || (min > 59) || (sec == 0) || (sec > 59) || (h_of_sec == 0) || (h_of_sec > 99))
      {
-         tx_time[CH] = tx_time[CL] = tx_time[DH] = tx_time[DL] = 0; // обуляем все данные
-         ui->label_2->setText("неправильный формат часов, мин., сек. или сот. долей сек. системного времени");
-         ui->label_2->setStyleSheet("QLabel{color: rgb(255, 10, 0); }");  // делаем текст красным
+         tx_time[CH] = tx_time[CL] = tx_time[DH] = tx_time[DL] = 0; // обуляем все данные        
+         return  ER_SYS_TIME;
      }
      else
      {  // если прошли проверку
@@ -76,16 +73,16 @@ void train_imitator::sys_time_retr(void)
          tx_time[DH] = h_of_sec;
          tx_time[DL] = sec;
 
-         ui->label_2->setText("");  // удаляем аварийную надпись
-         ui->label_2->setStyleSheet("QLabel{color: rgb(0, 0, 0); }");  // делаем текст чёрным
+         return NO_INPUT_ERRORS;
      }
+     return NO_INPUT_ERRORS;
 }
 
 /* @brief  Метод считывания в массив tx_post_start[8] даты отложенного старта
  * @param  None
  * @retval None
  */
-void train_imitator::post_date_retr(void)
+uint8_t train_imitator::post_date_retr(void)
 {
     // **********  считываем дату (день, месяц, год)  *****************************
     QString str = ui->lineEdit_8->text();     // забираем текст из строки день
@@ -99,8 +96,7 @@ void train_imitator::post_date_retr(void)
      if((day == 0) || (day > 31) || (month == 0) || (month > 12) || (year == 0) || (year < 2021) || (year > 2100))
      {
          tx_post_start[AH] = tx_post_start[AL] = tx_post_start[BH] = tx_post_start[BL] = 0; // обуляем все данные
-         ui->label_2->setText("неправильный формат числа, месяца или года системной даты");
-         ui->label_2->setStyleSheet("QLabel{color: rgb(255, 10, 0); }");  // делаем текст красным
+         return ER_POST_DATA;
      }
      else
      {  // если прошли проверку
@@ -109,16 +105,16 @@ void train_imitator::post_date_retr(void)
          tx_post_start[BH] = month;
          tx_post_start[BL] = day;
 
-         ui->label_2->setText("");  // удаляем аварийную надпись
-         ui->label_2->setStyleSheet("QLabel{color: rgb(0, 0, 0); }");  // делаем текст чёрным
+         return NO_INPUT_ERRORS;
      }
+     return NO_INPUT_ERRORS;
 }
 
 /* @brief  Метод считывания в массив tx_post_start[8] времени отложенного старта
  * @param  None
  * @retval None
  */
-void train_imitator::post_time_retr(void)
+uint8_t train_imitator::post_time_retr(void)
 {
     // **********  считываем время (часы, мин., сек., сотые доли сек.)  *****************************
     QString str = ui->lineEdit_11->text();     // забираем текст из строки час
@@ -134,8 +130,7 @@ void train_imitator::post_time_retr(void)
      if((hour > 23) || (min == 0) || (min > 59) || (sec == 0) || (sec > 59) || (h_of_sec == 0) || (h_of_sec > 99))
      {
          tx_post_start[CH] = tx_post_start[CL] = tx_post_start[DH] = tx_post_start[DL] = 0; // обуляем все данные
-         ui->label_2->setText("неправильный формат часов, мин., сек. или сот. долей сек. системного времени");
-         ui->label_2->setStyleSheet("QLabel{color: rgb(255, 10, 0); }");  // делаем текст красным
+         return ER_POST_TIME;
      }
      else
      {  // если прошли проверку
@@ -144,16 +139,16 @@ void train_imitator::post_time_retr(void)
          tx_post_start[DH] = h_of_sec;
          tx_post_start[DL] = sec;
 
-         ui->label_2->setText("");  // удаляем аварийную надпись
-         ui->label_2->setStyleSheet("QLabel{color: rgb(0, 0, 0); }");  // делаем текст чёрным
+         return NO_INPUT_ERRORS;
      }
+     return NO_INPUT_ERRORS;
 }
 
 /* @brief  Метод считывания в массив tx_commands[8] допустимой мощности сети 400 В
  * @param  None
  * @retval None
  */
-void train_imitator::valid_pwr_400_retr(void)
+uint8_t train_imitator::valid_pwr_400_retr(void)
 {
     // **********  считываем мощность  *****************************
     QString str = ui->lineEdit_15->text();    // забираем текст из строки
@@ -163,23 +158,22 @@ void train_imitator::valid_pwr_400_retr(void)
      if((pwr == 0) || (pwr > 254))
      {
          tx_commands[BH] = tx_commands[BL] = 0; // обуляем все данные
-         ui->label_2->setText("неправильный формат мощности (нужно целое число меньше 255)");
-         ui->label_2->setStyleSheet("QLabel{color: rgb(255, 10, 0); }");  // делаем текст красным
+         return ER_PWR_400;
      }
      else
      {  // если прошли проверку
          tx_commands[BH] = pwr;
 
-         ui->label_2->setText("");  // удаляем аварийную надпись
-         ui->label_2->setStyleSheet("QLabel{color: rgb(0, 0, 0); }");  // делаем текст чёрным
+         return NO_INPUT_ERRORS;
      }
+     return NO_INPUT_ERRORS;
 }
 
 /* @brief  Метод считывания в массив tx_commands[8] температуры окружающей среды
  * @param  None
  * @retval None
  */
-void train_imitator::ambient_temp_retr(void)
+uint8_t train_imitator::ambient_temp_retr(void)
 {
     // **********  считываем температуру  *****************************
     QString str = ui->lineEdit_16->text();    // забираем текст из строки
@@ -189,24 +183,23 @@ void train_imitator::ambient_temp_retr(void)
      if((t == 0) || (t > 850))
      {
          tx_commands[CH] = tx_commands[CL] = 0; // обуляем все данные
-         ui->label_2->setText("неправильный формат температуры (нужно целое число меньше 850)");
-         ui->label_2->setStyleSheet("QLabel{color: rgb(255, 10, 0); }");  // делаем текст красным
+         return ER_AIR_TEMP;
      }
      else
      {  // если прошли проверку
          tx_commands[CH] = t>>8;
          tx_commands[CL] = t;
 
-         ui->label_2->setText("");  // удаляем аварийную надпись
-         ui->label_2->setStyleSheet("QLabel{color: rgb(0, 0, 0); }");  // делаем текст чёрным
+         return NO_INPUT_ERRORS;
      }
+    return NO_INPUT_ERRORS;
 }
 
 /* @brief  Метод считывания в массив tx_commands[8] сдвига уставки температуры
  * @param  None
  * @retval None
  */
-void train_imitator::temp_offset_retr(void)
+uint8_t train_imitator::temp_offset_retr(void)
 {
     // **********  считываем сдвиг  *****************************
     QString str = ui->lineEdit_17->text();        // забираем текст из строки
@@ -216,16 +209,15 @@ void train_imitator::temp_offset_retr(void)
      if((offset == 0) || (offset > 254))
      {
          tx_commands[DH] = tx_commands[DL] = 0; // обуляем все данные
-         ui->label_2->setText("неправильный формат сдвига уставки");
-         ui->label_2->setStyleSheet("QLabel{color: rgb(255, 10, 0); }");  // делаем текст красным
+         return ER_SET_OFFSET;
      }
      else
      {  // если прошли проверку
          tx_commands[DH] = offset;
 
-         ui->label_2->setText("");  // удаляем аварийную надпись
-         ui->label_2->setStyleSheet("QLabel{color: rgb(0, 0, 0); }");  // делаем текст чёрным
+         return NO_INPUT_ERRORS;
      }
+    return NO_INPUT_ERRORS;
 }
 
 
@@ -233,24 +225,42 @@ void train_imitator::temp_offset_retr(void)
  * @param  None
  * @retval None
  */
-void train_imitator::check_boxes_retr(void)
+uint8_t train_imitator::check_boxes_retr(void)
 {
     tx_commands[AH] |= CMD_RESET;   // сбрасываем все предыдущие команды
 
     if(ui->checkBox_19->checkState() == Qt::Checked)
     {
         tx_commands[AH] |= CMD_OFF;
-        ui->label_2->setText("");  // удаляем аварийную надпись
-        ui->label_2->setStyleSheet("QLabel{color: rgb(0, 0, 0); }");  // делаем текст чёрным
+        return ER_CHECK_BOX;
     }
     else if(ui->checkBox_19->checkState() == Qt::Checked)
     {
         tx_commands[AH] |= CMD_OFF;
-        ui->label_2->setText("");  // удаляем аварийную надпись
-        ui->label_2->setStyleSheet("QLabel{color: rgb(0, 0, 0); }");  // делаем текст чёрным
+        return NO_INPUT_ERRORS;
     }
+    return NO_INPUT_ERRORS;
+}
+
+/* @brief  Метод обработки ошибок ввода данных
+ * @param  None
+ * @retval None
+ */
+void train_imitator::errors_printing(void)
+{
+
 
 }
+
+
+
+
+
+
+
+
+
+
 
 /* ***************************************************************************************
  *  СЛОТЫ
@@ -266,14 +276,16 @@ void train_imitator::check_boxes_retr(void)
  */
 void train_imitator::tab_commands(void)
 {
-    sys_date_retr();        // считывание системной даты
-    sys_time_retr();        // считывание системного времени
-    post_date_retr();       // считывание даты отложенного старта
-    post_time_retr();       // считывание времени отложенного старта
-    valid_pwr_400_retr();   // считывание допустимой мощности сети 400 В
-    ambient_temp_retr();    // считывание температуры наружного воздуха
-    temp_offset_retr();     // считывание сдвига уставки температуры
-    check_boxes_retr();     // считывание команд из чекбоксов
+    input_errors[0] = sys_date_retr();        // считывание системной даты
+    input_errors[1] = sys_time_retr();        // считывание системного времени
+    input_errors[2] = post_date_retr();       // считывание даты отложенного старта
+    input_errors[3] = post_time_retr();       // считывание времени отложенного старта
+    input_errors[4] = valid_pwr_400_retr();   // считывание допустимой мощности сети 400 В
+    input_errors[5] = ambient_temp_retr();    // считывание температуры наружного воздуха
+    input_errors[6] = temp_offset_retr();     // считывание сдвига уставки температуры
+    input_errors[7] = check_boxes_retr();     // считывание команд из чекбоксов
+
+    errors_printing();      // печать ошибок в Служебную информацию
 }
 
 

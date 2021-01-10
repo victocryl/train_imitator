@@ -6,6 +6,9 @@ train_imitator::train_imitator(QWidget *parent)
     , ui(new Ui::train_imitator)
 {
     ui->setupUi(this);
+
+    input_errors = 0;   // хранит ошибки ввода данных
+
     interface_init();   // первичная инициализации интерфейса
     can_arrays_init();  // инициализируем нулями массивы can
 

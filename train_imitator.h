@@ -29,6 +29,9 @@ Ui::train_imitator *ui;
 /*******  вспомогательные переменные *************/
 bool str_error;
 
+/*******  рабочие переменные *************/
+
+
 /*******  массивы rx, tx can-посылок *************/
     uint8_t tx_time[8];
     uint8_t tx_post_start[8];
@@ -37,6 +40,8 @@ bool str_error;
     uint8_t rx_failuries[8];
     uint8_t rx_service_info[8];
     uint8_t init_array[8];
+
+    uint8_t input_errors[8];    // массив ошибок ввода данных
 
 /*******  enum байтов посылок Can *************/
     typedef enum canbytes
@@ -52,20 +57,36 @@ bool str_error;
         DATA_NUM
     }TE_canbytes;
 
+/*******  enum кодов ошибок ввода данных *************/
+    typedef enum input_errors
+    {
+        NO_INPUT_ERRORS,
+        ER_SYS_DATA,
+        ER_SYS_TIME,
+        ER_POST_DATA,
+        ER_POST_TIME,
+        ER_PWR_400,
+        ER_AIR_TEMP,
+        ER_SET_OFFSET,
+        ER_CHECK_BOX
+    }TE_input_errors;
+
 /*******  методы ******************************/
     // первичная инициализация
     void interface_init(void);      // первичная инициализация интерфейса
     void can_arrays_init(void);     // инициализация can массивов нулями
 
     // считывание данных и команд
-    void sys_date_retr(void);       // считывание системной даты
-    void sys_time_retr(void);       // считывание системного времени
-    void post_date_retr(void);      // считывание даты отложенного старта
-    void post_time_retr(void);      // считывание времени отложенного старта
-    void valid_pwr_400_retr(void);  // считывание допустимой мощности сети 400 В
-    void ambient_temp_retr(void);   // считывание температуры наружного воздуха
-    void temp_offset_retr(void);    // считывание сдвига уставки температуры
-    void check_boxes_retr(void);    // считывание команд из чекбоксов
+    uint8_t sys_date_retr(void);       // считывание системной даты
+    uint8_t sys_time_retr(void);       // считывание системного времени
+    uint8_t post_date_retr(void);      // считывание даты отложенного старта
+    uint8_t post_time_retr(void);      // считывание времени отложенного старта
+    uint8_t valid_pwr_400_retr(void);  // считывание допустимой мощности сети 400 В
+    uint8_t ambient_temp_retr(void);   // считывание температуры наружного воздуха
+    uint8_t temp_offset_retr(void);    // считывание сдвига уставки температуры
+    uint8_t check_boxes_retr(void);    // считывание команд из чекбоксов
+
+    void errors_printing(void);     // вывод ошибок в Служ. Информацию
 
 /*******  слоты *******************************/
 private slots:
