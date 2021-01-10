@@ -21,10 +21,7 @@ void train_imitator::tab_commands(void)
     valid_pwr_400_retr();   // считывание допустимой мощности сети 400 В
     ambient_temp_retr();    // считывание температуры наружного воздуха
     temp_offset_retr();     // считывание сдвига уставки температуры
-
-
-
-
+    check_boxes_retr();     // считывание команд из чекбоксов
 }
 
 /* @brief  Метод считывания в массив tx_time[8] системной даты
@@ -245,6 +242,33 @@ void train_imitator::temp_offset_retr(void)
 }
 
 
+/* @brief  Метод считывания из чекбоксов галочек команд в массив tx_commands[8]
+ * @param  None
+ * @retval None
+ */
+void train_imitator::check_boxes_retr(void)
+{
+    tx_commands[AH] |= CMD_RESET;   // сбрасываем все предыдущие команды
+
+    if(ui->checkBox_19->checkState() == Qt::Checked)
+    {
+        tx_commands[AH] |= CMD_OFF;
+        ui->label_2->setText("");  // удаляем аварийную надпись
+        ui->label_2->setStyleSheet("QLabel{color: rgb(0, 0, 0); }");  // делаем текст чёрным
+    }
+    else if(ui->checkBox_19->checkState() == Qt::Checked)
+    {
+        tx_commands[AH] |= CMD_OFF;
+        ui->label_2->setText("");  // удаляем аварийную надпись
+        ui->label_2->setStyleSheet("QLabel{color: rgb(0, 0, 0); }");  // делаем текст чёрным
+    }
+
+
+
+
+
+
+}
 
 
 

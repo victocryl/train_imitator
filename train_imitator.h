@@ -53,7 +53,11 @@ bool str_error;
     }TE_canbytes;
 
 /*******  методы ******************************/
+    // первичная инициализация
+    void interface_init(void);      // первичная инициализация интерфейса
     void can_arrays_init(void);     // инициализация can массивов нулями
+
+    // считывание данных и команд
     void sys_date_retr(void);       // считывание системной даты
     void sys_time_retr(void);       // считывание системного времени
     void post_date_retr(void);      // считывание даты отложенного старта
@@ -61,7 +65,7 @@ bool str_error;
     void valid_pwr_400_retr(void);  // считывание допустимой мощности сети 400 В
     void ambient_temp_retr(void);   // считывание температуры наружного воздуха
     void temp_offset_retr(void);    // считывание сдвига уставки температуры
-
+    void check_boxes_retr(void);    // считывание команд из чекбоксов
 
 /*******  слоты *******************************/
 private slots:

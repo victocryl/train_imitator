@@ -6,7 +6,7 @@ train_imitator::train_imitator(QWidget *parent)
     , ui(new Ui::train_imitator)
 {
     ui->setupUi(this);
-
+    interface_init();   // первичная инициализации интерфейса
     can_arrays_init();  // инициализируем нулями массивы can
 
     connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(tab_commands())); // кнопка "задать параметры"
@@ -17,6 +17,15 @@ train_imitator::train_imitator(QWidget *parent)
 train_imitator::~train_imitator()
 {
     delete ui;
+}
+
+/* @brief  Метод первичной инициализации интерфейса
+ * @param  None
+ * @retval None
+ */
+void train_imitator::interface_init(void)
+{
+    ui->checkBox_30->setCheckState(Qt::Checked);
 }
 
 /* @brief  Метод инициализации массивов can нулями
