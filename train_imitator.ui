@@ -563,7 +563,7 @@
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
-       <string>КОМАНДЫ, СТАТУСЫ, ЗАДАВАЕМЫЕ ПАРАМЕТРЫ</string>
+       <string>ЗАДАВАЕМЫЕ КОМАНДЫ, СТАТУСЫ, ПАРАМЕТРЫ</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_7">
        <item>
