@@ -38,6 +38,9 @@ uint8_t train_imitator::sys_date_retr(void)
          tx_time[BH] = month;
          tx_time[BL] = day;
 
+         // помещаем данные в окно в шапке интерфейса
+         ui->label_36->setText(QString::number(day)+"."+QString::number(month)+"."+QString::number(year));
+
          return NO_INPUT_ERRORS;
      }
      return NO_INPUT_ERRORS;
@@ -73,6 +76,9 @@ uint8_t train_imitator::sys_time_retr(void)
          tx_time[DH] = h_of_sec;
          tx_time[DL] = sec;
 
+         // помещаем данные в окно в шапке интерфейса
+         ui->label_9->setText(QString::number(hour)+":"+QString::number(min)+":"+QString::number(sec)+":"+QString::number(h_of_sec));
+
          return NO_INPUT_ERRORS;
      }
      return NO_INPUT_ERRORS;
@@ -104,6 +110,9 @@ uint8_t train_imitator::post_date_retr(void)
          tx_post_start[AL] = year;
          tx_post_start[BH] = month;
          tx_post_start[BL] = day;
+
+         // помещаем данные в окно в шапке интерфейса
+         ui->label_44->setText(QString::number(day)+"."+QString::number(month)+"."+QString::number(year));
 
          return NO_INPUT_ERRORS;
      }
@@ -138,6 +147,9 @@ uint8_t train_imitator::post_time_retr(void)
          tx_post_start[CL] = hour;
          tx_post_start[DH] = h_of_sec;
          tx_post_start[DL] = sec;
+
+         // помещаем данные в окно в шапке интерфейса
+         ui->label_65->setText(QString::number(hour)+":"+QString::number(min)+":"+QString::number(sec)+":"+QString::number(h_of_sec));
 
          return NO_INPUT_ERRORS;
      }
@@ -189,6 +201,9 @@ uint8_t train_imitator::ambient_temp_retr(void)
      {  // если прошли проверку
          tx_commands[CH] = t>>8;
          tx_commands[CL] = t;
+
+         // помещаем данные в окно в шапке интерфейса
+         ui->label_13->setText(QString::number(t));
 
          return NO_INPUT_ERRORS;
      }

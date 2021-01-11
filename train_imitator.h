@@ -87,7 +87,7 @@ bool str_error;
     uint8_t temp_offset_retr(void);    // считывание сдвига уставки температуры
     uint8_t check_boxes_retr(void);    // считывание команд из чекбоксов
 
-    void errors_printing(void);     // вывод ошибок в Служ. Информацию
+    void errors_printing(void);        // вывод ошибок в Служ. Информацию
 
 /*******  слоты *******************************/
 private slots:
