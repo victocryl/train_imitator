@@ -6,7 +6,7 @@
 
 /********** Биты команд закладки Команды, посылки 0x51 \ 0x91 *********/
 // AH
-#define CMD_RESET                   0x00
+#define CMD_RESET                   0xF0
 #define CMD_OFF                     0x00
 #define CMD_ON                      0x01
 #define CMD_OTSTOY                  0x02

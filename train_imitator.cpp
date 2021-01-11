@@ -7,10 +7,9 @@ train_imitator::train_imitator(QWidget *parent)
 {
     ui->setupUi(this);
 
-    input_errors = 0;   // хранит ошибки ввода данных
-
     interface_init();   // первичная инициализации интерфейса
     can_arrays_init();  // инициализируем нулями массивы can
+    memcpy(input_errors, init_array, 8);   // хранит ошибки ввода данных
 
     connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(tab_commands())); // кнопка "задать параметры"
 

@@ -17,7 +17,7 @@
  */
 uint8_t train_imitator::sys_date_retr(void)
 {
-    // **********  считываем дату (день, месяц, год)  *****************************
+    // считываем дату (день, месяц, год)
     QString str = ui->lineEdit_5->text();     // забираем текст из строки день
     uint8_t day = str.toInt(&str_error, 10);  // переводим в int
     str = ui->lineEdit_6->text();             // забираем месяц
@@ -227,19 +227,41 @@ uint8_t train_imitator::temp_offset_retr(void)
  */
 uint8_t train_imitator::check_boxes_retr(void)
 {
-    tx_commands[AH] |= CMD_RESET;   // сбрасываем все предыдущие команды
+    uint8_t ch_b_cnt = 0;   // счётчик кликнутых чекбоксов
 
+    tx_commands[AH] &= CMD_RESET;   // сбрасываем все предыдущие команды
+
+    // проверяем чекбоксы главных 4-х режимов
+    if(ui->checkBox_30->checkState() == Qt::Checked)
+    {
+        tx_commands[AH] |= CMD_OFF;
+        ch_b_cnt++;
+    }
     if(ui->checkBox_19->checkState() == Qt::Checked)
     {
-        tx_commands[AH] |= CMD_OFF;
-        return ER_CHECK_BOX;
+        tx_commands[AH] |= CMD_ON;
+        ch_b_cnt++;
     }
-    else if(ui->checkBox_19->checkState() == Qt::Checked)
+    if(ui->checkBox_7->checkState() == Qt::Checked)
     {
-        tx_commands[AH] |= CMD_OFF;
-        return NO_INPUT_ERRORS;
+        tx_commands[AH] |= CMD_OTSTOY;
+        ch_b_cnt++;
     }
-    return NO_INPUT_ERRORS;
+    if(ui->checkBox_16->checkState() == Qt::Checked)
+    {
+        tx_commands[AH] |= CMD_MOYKA;
+        ch_b_cnt++;
+    }
+
+    // проверяем чекбоксы доп. статусов (Станция и Тоннель)
+    if(ui->checkBox_17->checkState() == Qt::Checked){tx_commands[AH] |= BIT_STATION;}
+    else{tx_commands[AH] &= ~BIT_STATION;}
+    if(ui->checkBox_18->checkState() == Qt::Checked){tx_commands[AH] |= BIT_TONNEL;}
+    else{tx_commands[AH] &= ~BIT_TONNEL;}
+
+    // если кликнуто более 1 чекбокса из 4-х основных режимов - возвращаем ошибку
+    if(ch_b_cnt > 1){return ER_CHECK_BOX;}
+    else{return NO_INPUT_ERRORS;}
 }
 
 /* @brief  Метод обработки ошибок ввода данных
@@ -248,8 +270,58 @@ uint8_t train_imitator::check_boxes_retr(void)
  */
 void train_imitator::errors_printing(void)
 {
+    ui->label_2->setText("");  // удаляем любую надпись
+    ui->label_2->setStyleSheet("QLabel{color: rgb(0, 0, 0); }");  // делаем текст чёрным
 
+    if(input_errors[0])
+    {
+        ui->label_2->setText("неправильный формат числа, месяца или года системной даты");
+        ui->label_2->setStyleSheet("QLabel{color: rgb(255, 10, 0); }");  // делаем текст красным
+    }
 
+    if(input_errors[1])
+    {
+        ui->label_2->setText("неправильный формат данных системного времени");
+        ui->label_2->setStyleSheet("QLabel{color: rgb(255, 10, 0); }");  // делаем текст красным
+    }
+
+    if(input_errors[2])
+    {
+        ui->label_2->setText("неправильный формат числа, месяца или года отложенного старта");
+        ui->label_2->setStyleSheet("QLabel{color: rgb(255, 10, 0); }");  // делаем текст красным
+    }
+
+    if(input_errors[3])
+    {
+        ui->label_2->setText("неправильный формат времени отдложенного старта");
+        ui->label_2->setStyleSheet("QLabel{color: rgb(255, 10, 0); }");  // делаем текст красным
+    }
+
+    if(input_errors[4])
+    {
+        ui->label_2->setText("неправильный формат данных потребляемой мощности");
+        ui->label_2->setStyleSheet("QLabel{color: rgb(255, 10, 0); }");  // делаем текст красным
+    }
+
+    if(input_errors[5])
+    {
+        ui->label_2->setText("неправильный формат данных температуры наружного воздуха");
+        ui->label_2->setStyleSheet("QLabel{color: rgb(255, 10, 0); }");  // делаем текст красным
+    }
+
+    if(input_errors[6])
+    {
+        ui->label_2->setText("неправильный формат данных смещения температурной уставки");
+        ui->label_2->setStyleSheet("QLabel{color: rgb(255, 10, 0); }");  // делаем текст красным
+    }
+
+    if(input_errors[7])
+    {
+        ui->label_2->setText("может быть выбран только 1 из 4-х режимов: Отключение, Включение, Отстой или Мойка");
+        ui->label_2->setStyleSheet("QLabel{color: rgb(255, 10, 0); }");  // делаем текст красным
+    }
+
+    memcpy(input_errors, init_array, 8);   // обнуляем массив ошибок
 }
 
 
@@ -285,7 +357,7 @@ void train_imitator::tab_commands(void)
     input_errors[6] = temp_offset_retr();     // считывание сдвига уставки температуры
     input_errors[7] = check_boxes_retr();     // считывание команд из чекбоксов
 
-    errors_printing();      // печать ошибок в Служебную информацию
+    errors_printing();      // печать ошибок в строку Служебной информации
 }
 
 
