@@ -28,6 +28,30 @@ train_imitator::~train_imitator()
 void train_imitator::interface_init(void)
 {
     ui->checkBox_30->setCheckState(Qt::Checked);
+
+    // первичное заполнение lineEdit-ов для целей отладки
+    ui->lineEdit_5->setText("5");
+    ui->lineEdit_6->setText("5");
+    ui->lineEdit_7->setText("2021");
+
+    ui->lineEdit->setText("5");
+    ui->lineEdit_2->setText("5");
+    ui->lineEdit_3->setText("5");
+    ui->lineEdit_4->setText("5");
+
+    ui->lineEdit_8->setText("5");
+    ui->lineEdit_9->setText("5");
+    ui->lineEdit_10->setText("2021");
+
+    ui->lineEdit_11->setText("5");
+    ui->lineEdit_12->setText("5");
+    ui->lineEdit_13->setText("5");
+    ui->lineEdit_14->setText("5");
+
+    ui->lineEdit_15->setText("5");
+    ui->lineEdit_16->setText("5");
+    ui->lineEdit_17->setText("5");
+
 }
 
 /* @brief  Метод инициализации массивов can нулями
