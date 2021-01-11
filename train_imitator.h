@@ -85,7 +85,8 @@ bool str_error;
     uint8_t valid_pwr_400_retr(void);  // считывание допустимой мощности сети 400 В
     uint8_t ambient_temp_retr(void);   // считывание температуры наружного воздуха
     uint8_t temp_offset_retr(void);    // считывание сдвига уставки температуры
-    uint8_t check_boxes_retr(void);    // считывание команд из чекбоксов
+    uint8_t cmd_check_boxes_retr(void);// считывание команд из чекбоксов
+    void stat_check_boxes_retr(void);  // считывание статусов из чекбоксов
 
     void errors_printing(void);        // вывод ошибок в Служ. Информацию
 

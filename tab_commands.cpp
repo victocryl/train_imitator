@@ -176,6 +176,9 @@ uint8_t train_imitator::valid_pwr_400_retr(void)
      {  // если прошли проверку
          tx_commands[BH] = pwr;
 
+         // помещаем данные в окно в шапке интерфейса
+         ui->label_20->setText(QString::number(pwr)+"кВт");
+
          return NO_INPUT_ERRORS;
      }
      return NO_INPUT_ERRORS;
@@ -240,7 +243,7 @@ uint8_t train_imitator::temp_offset_retr(void)
  * @param  None
  * @retval None
  */
-uint8_t train_imitator::check_boxes_retr(void)
+uint8_t train_imitator::cmd_check_boxes_retr(void)
 {
     uint8_t ch_b_cnt = 0;   // счётчик кликнутых чекбоксов
 
@@ -278,6 +281,33 @@ uint8_t train_imitator::check_boxes_retr(void)
     if(ch_b_cnt > 1){return ER_CHECK_BOX;}
     else{return NO_INPUT_ERRORS;}
 }
+
+/* @brief  Метод считывания статусов из чекбоксов раздела "ЗАДАТЬ СТАТУСЫ"
+ * @param  None
+ * @retval None
+ */
+void train_imitator::stat_check_boxes_retr(void)
+{
+    if(ui->checkBox_33->checkState() == Qt::Checked){tx_commands[AH] |= BIT_OTKR_DVER;}
+    else{tx_commands[AH] &= ~BIT_OTKR_DVER;}
+    if(ui->checkBox_11->checkState() == Qt::Checked){tx_commands[AH] |= BIT_3000_V;}
+    else{tx_commands[AH] &= ~BIT_3000_V;}
+    if(ui->checkBox_34->checkState() == Qt::Checked){tx_commands[AL] |= BIT_400_V;}
+    else{tx_commands[AL] &= ~BIT_400_V;}
+    if(ui->checkBox_34->checkState() == Qt::Checked){tx_commands[AL] |= BIT_400_V;}
+    else{tx_commands[AL] &= ~BIT_400_V;}
+    if(ui->checkBox_35->checkState() == Qt::Checked){tx_commands[AL] |= BIT_REZH_OGR_MOSCHN;}
+    else{tx_commands[AL] &= ~BIT_REZH_OGR_MOSCHN;}
+    if(ui->checkBox_36->checkState() == Qt::Checked){tx_commands[AL] |= BIT_VKL_COMPR_RAZR;}
+    else{tx_commands[AL] &= ~BIT_VKL_COMPR_RAZR;}
+    if(ui->checkBox_37->checkState() == Qt::Checked){tx_commands[AL] |= BIT_VKL_REC_NAGR;}
+    else{tx_commands[AL] &= ~BIT_VKL_REC_NAGR;}
+    if(ui->checkBox_38->checkState() == Qt::Checked){tx_commands[AL] |= BIT_SBR_ACTIV_SERV_SOOB;}
+    else{tx_commands[AL] &= ~BIT_SBR_ACTIV_SERV_SOOB;}
+    qDebug()<< tx_commands[AH]<<" "<<tx_commands[AL];
+}
+
+
 
 /* @brief  Метод обработки ошибок ввода данных
  * @param  None
@@ -370,7 +400,9 @@ void train_imitator::tab_commands(void)
     input_errors[4] = valid_pwr_400_retr();   // считывание допустимой мощности сети 400 В
     input_errors[5] = ambient_temp_retr();    // считывание температуры наружного воздуха
     input_errors[6] = temp_offset_retr();     // считывание сдвига уставки температуры
-    input_errors[7] = check_boxes_retr();     // считывание команд из чекбоксов
+    input_errors[7] = cmd_check_boxes_retr(); // считывание команд из чекбоксов
+
+    stat_check_boxes_retr(); // считывание команд из чекбоксов
 
     errors_printing();      // печать ошибок в строку Служебной информации
 }
