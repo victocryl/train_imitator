@@ -396,8 +396,7 @@ void train_imitator::tab_commands(void)
     input_errors[7] = cmd_check_boxes_retr(); // считывание команд из чекбоксов
 
     stat_check_boxes_retr(); // считывание команд из чекбоксов
-
-    errors_printing();      // печать ошибок в строку Служебной информации
+    errors_printing();       // печать ошибок в строку Служебной информации
 }
 
 
