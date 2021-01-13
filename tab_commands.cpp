@@ -304,7 +304,6 @@ void train_imitator::stat_check_boxes_retr(void)
     else{tx_commands[AL] &= ~BIT_VKL_REC_NAGR;}
     if(ui->checkBox_38->checkState() == Qt::Checked){tx_commands[AL] |= BIT_SBR_ACTIV_SERV_SOOB;}
     else{tx_commands[AL] &= ~BIT_SBR_ACTIV_SERV_SOOB;}
-    qDebug()<< tx_commands[AH]<<" "<<tx_commands[AL];
 }
 
 

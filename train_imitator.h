@@ -79,6 +79,7 @@ bool str_error;
 
     void diag_simulate(void);       // для тестов - симуляция посылки rx_diag_data
     void failuries_simulate(void);  // для тестов - симуляция посылки rx_failuries
+    void service_simulate(void);    // для тестов - симуляция посылки rx_service_info
 
     // считывание данных и команд
     uint8_t sys_date_retr(void);       // считывание системной даты
@@ -98,6 +99,7 @@ private slots:
     void tab_commands(void);
     void diag(void);
     void failuries(void);
+    void service(void);
 
 
 
