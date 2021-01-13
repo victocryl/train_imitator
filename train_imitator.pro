@@ -12,6 +12,7 @@ SOURCES += \
     diag_data.cpp \
     failuries_data.cpp \
     main.cpp \
+    service_info.cpp \
     tab_commands.cpp \
     train_imitator.cpp
 
