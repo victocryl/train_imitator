@@ -69,13 +69,15 @@ void train_imitator::can_arrays_init(void)
     memcpy(rx_failuries, init_array, 8);
     memcpy(rx_service_info, init_array, 8);
 
-    // заполнение массива rx_diag_data[8] для целей тестирования
-//    rx_diag_data[AH] &= 0xF0; rx_diag_data[AH] |= BIT_REZH_OFF;
-//    rx_diag_data[AH] &= 0xF0; rx_diag_data[AH] |= BIT_REZH_ON;
-//    rx_diag_data[AH] &= 0xF0; rx_diag_data[AH] |= BIT_REZH_OTSTOY;
-//    rx_diag_data[AH] &= 0xF0; rx_diag_data[AH] |= BIT_REZH_MOYKA;
-//    rx_diag_data[AH] &= 0xF0; rx_diag_data[AH] |= BIT_REZH_AVAR_VENT;
-    rx_diag_data[AH] &= 0xF0; rx_diag_data[AH] |= BIT_REZH_AVAR_OTOP;
+    // методы для тестирования
+    diag_simulate();
+
 
 
 }
+
+
+
+
+
+

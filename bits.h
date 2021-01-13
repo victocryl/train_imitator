@@ -40,8 +40,8 @@
 
 /********** Биты сообщений об отказах УК, посылки 0x1F5 \ 0x201 *********/
 // AH
-#define BIT_SET_3000_V_OTSUT        (1<<0)
-#define BIT_SET_400_V_OTSUT         (1<<1)
+#define BIT_3000_V_OTSUT            (1<<0)
+#define BIT_400_V_OTSUT             (1<<1)
 #define BIT_OTKAZ_VENT_PRIT_1       (1<<2)
 #define BIT_OTKAZ_VENT_PRIT_2       (1<<3)
 #define BIT_OTKAZ_VENT_OTR_VOZD     (1<<4)

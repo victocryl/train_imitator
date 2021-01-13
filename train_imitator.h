@@ -77,6 +77,8 @@ bool str_error;
     void interface_init(void);      // первичная инициализация интерфейса
     void can_arrays_init(void);     // инициализация can массивов нулями
 
+    void diag_simulate(void);   // для тестов - симуляция посылки rx_diag_data
+
     // считывание данных и команд
     uint8_t sys_date_retr(void);       // считывание системной даты
     uint8_t sys_time_retr(void);       // считывание системного времени

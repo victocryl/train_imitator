@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     diag_data.cpp \
+    failuries_data.cpp \
     main.cpp \
     tab_commands.cpp \
     train_imitator.cpp
