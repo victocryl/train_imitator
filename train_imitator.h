@@ -34,12 +34,12 @@ bool str_error;
 
 
 /*******  массивы rx, tx can-посылок *************/
-    uint8_t tx_time[8];
-    uint8_t tx_post_start[8];
-    uint8_t tx_commands[8];
-    uint8_t rx_diag_data[8];
-    uint8_t rx_failuries[8];
-    uint8_t rx_service_info[8];
+    uint8_t tx_time[8];             // 0x10 посылка даты и времени (для линии В 0x60)
+    uint8_t tx_post_start[8];       // 0x50 посылка отложенного старта (для линии В 0x90)
+    uint8_t tx_commands[8];         // 0x51 посылка с командами для УКВ (для линии В 0x91)
+    uint8_t rx_diag_data[8];        // 0x1F4 посылка с диагностическими статусами (для линии В 0x200)
+    uint8_t rx_failuries[8];        // 0x1F5 посылка с ошибками УКВ (для линии В 0x201)
+    uint8_t rx_service_info[8];     // 0x1F6 посылка с сервисной информацией (для линии В 0x202)
     uint8_t init_array[8];
 
     uint8_t input_errors[8];    // массив ошибок ввода данных
@@ -93,6 +93,7 @@ bool str_error;
 /*******  слоты *******************************/
 private slots:
     void tab_commands(void);
+    void diag(void);
 
 
 

@@ -1,5 +1,6 @@
 #include "train_imitator.h"
 #include "ui_train_imitator.h"
+#include "bits.h"
 
 train_imitator::train_imitator(QWidget *parent)
     : QWidget(parent)
@@ -12,7 +13,7 @@ train_imitator::train_imitator(QWidget *parent)
     memcpy(input_errors, init_array, 8);   // хранит ошибки ввода данных
 
     connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(tab_commands())); // кнопка "задать параметры"
-
+    connect(ui->pushButton_2, SIGNAL(clicked(bool)), this, SLOT(diag()));       // получение diag-посылки
 
 }
 
@@ -27,7 +28,7 @@ train_imitator::~train_imitator()
  */
 void train_imitator::interface_init(void)
 {
-    ui->checkBox_30->setCheckState(Qt::Checked);
+    ui->checkBox_30->setCheckState(Qt::Checked);    // ставим галочку напротив "Отключение"
 
     // первичное заполнение lineEdit-ов для целей отладки
     ui->lineEdit_5->setText("5");
@@ -67,4 +68,14 @@ void train_imitator::can_arrays_init(void)
     memcpy(rx_diag_data, init_array, 8);
     memcpy(rx_failuries, init_array, 8);
     memcpy(rx_service_info, init_array, 8);
+
+    // заполнение массива rx_diag_data[8] для целей тестирования
+//    rx_diag_data[AH] &= 0xF0; rx_diag_data[AH] |= BIT_REZH_OFF;
+//    rx_diag_data[AH] &= 0xF0; rx_diag_data[AH] |= BIT_REZH_ON;
+//    rx_diag_data[AH] &= 0xF0; rx_diag_data[AH] |= BIT_REZH_OTSTOY;
+//    rx_diag_data[AH] &= 0xF0; rx_diag_data[AH] |= BIT_REZH_MOYKA;
+//    rx_diag_data[AH] &= 0xF0; rx_diag_data[AH] |= BIT_REZH_AVAR_VENT;
+    rx_diag_data[AH] &= 0xF0; rx_diag_data[AH] |= BIT_REZH_AVAR_OTOP;
+
+
 }

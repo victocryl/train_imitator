@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1180</width>
+    <width>1278</width>
     <height>812</height>
    </rect>
   </property>
@@ -628,7 +628,7 @@
                  </font>
                 </property>
                 <property name="text">
-                 <string>Получить посылки от УК</string>
+                 <string>Получить diag посылку</string>
                 </property>
                </widget>
               </item>

@@ -24,10 +24,13 @@
 
 /********** Биты обратной связи (диагностические), посылки 0x1F4 \ 0x200 *********/
 // AH
-#define BIT_REZH_OFF                     (1<<0)
-#define BIT_REZH_ON                      (1<<1)
-#define BIT_REZH_OTST_VO_VKL_SOST        (1<<2)
-#define BIT_REZH_MOYKA                   (1<<3)
+#define DIAG_MASK                        0x0f
+#define BIT_REZH_OFF                     0x00
+#define BIT_REZH_ON                      0x01
+#define BIT_REZH_OTSTOY                  0x02
+#define BIT_REZH_MOYKA                   0x03
+#define BIT_REZH_AVAR_VENT               0x04
+#define BIT_REZH_AVAR_OTOP               0x05
 #define BIT_REZH_STATION                 (1<<4)
 #define BIT_REZH_TONNEL                  (1<<5)
 #define BIT_REZH_OBOGREV                 (1<<6)
