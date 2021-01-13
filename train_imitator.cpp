@@ -14,6 +14,7 @@ train_imitator::train_imitator(QWidget *parent)
 
     connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(tab_commands())); // кнопка "задать параметры"
     connect(ui->pushButton_2, SIGNAL(clicked(bool)), this, SLOT(diag()));       // получение diag-посылки
+    connect(ui->pushButton_3, SIGNAL(clicked(bool)), this, SLOT(failuries()));       // получение посылки failuries
 
 }
 
@@ -71,8 +72,7 @@ void train_imitator::can_arrays_init(void)
 
     // методы для тестирования
     diag_simulate();
-
-
+    failuries_simulate();
 
 }
 
