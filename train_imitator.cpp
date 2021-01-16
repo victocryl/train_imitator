@@ -8,6 +8,7 @@ train_imitator::train_imitator(QWidget *parent)
 {
     ui->setupUi(this);
 
+    CiInit();           // инициализируем библиотеку CHAI для can адаптера
     interface_init();   // первичная инициализации интерфейса
     can_arrays_init();  // инициализируем нулями массивы can
     memcpy(input_errors, init_array, 8);   // хранит ошибки ввода данных
@@ -15,7 +16,10 @@ train_imitator::train_imitator(QWidget *parent)
     connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(tab_commands())); // кнопка "задать параметры"
     connect(ui->pushButton_2, SIGNAL(clicked(bool)), this, SLOT(diag()));       // получение diag-посылки
     connect(ui->pushButton_3, SIGNAL(clicked(bool)), this, SLOT(failuries()));  // получение посылки rx_failuries
-    connect(ui->pushButton_4, SIGNAL(clicked(bool)), this, SLOT(service()));  // получение посылки rx_service_info
+    connect(ui->pushButton_4, SIGNAL(clicked(bool)), this, SLOT(service()));    // получение посылки rx_service_info
+
+    // группа методов коннект для can
+    connect(ui->pushButton_5, SIGNAL(clicked(bool)), this, SLOT(on_btn_connect())); // на нажате кнопки "подключиться"
 
 }
 

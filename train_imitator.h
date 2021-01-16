@@ -29,7 +29,9 @@ private:
 Ui::train_imitator *ui;
 
 /*******  вспомогательные переменные *************/
-bool str_error;
+    bool str_error;
+    QString brd_name;       // наименование платы адаптера
+    QString brd_manuf;      // производитель платы
 
 /*******  рабочие переменные *************/
 
@@ -82,6 +84,9 @@ bool str_error;
     void failuries_simulate(void);  // для тестов - симуляция посылки rx_failuries
     void service_simulate(void);    // для тестов - симуляция посылки rx_service_info
 
+    void can_error_handler(_s16 er_code);   // обработчик ошибок can
+    _s16 board_info(void);                  // сбор инфо об адаптере
+
     // считывание данных и команд
     uint8_t sys_date_retr(void);       // считывание системной даты
     uint8_t sys_time_retr(void);       // считывание системного времени
@@ -101,6 +106,9 @@ private slots:
     void diag(void);
     void failuries(void);
     void service(void);
+
+    void on_btn_connect(void);
+
 
 
 
