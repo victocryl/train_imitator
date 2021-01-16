@@ -308,7 +308,7 @@ void train_imitator::stat_check_boxes_retr(void)
 
 
 
-/* @brief  Метод обработки ошибок ввода данных
+/* @brief  Метод обработки ошибок ввода данных и вывод их в строку служ. инфо
  * @param  None
  * @retval None
  */
@@ -386,6 +386,8 @@ void train_imitator::errors_printing(void)
  */
 void train_imitator::tab_commands(void)
 {
+    int error = 0;
+
     input_errors[0] = sys_date_retr();        // считывание системной даты
     input_errors[1] = sys_time_retr();        // считывание системного времени
     input_errors[2] = post_date_retr();       // считывание даты отложенного старта
@@ -397,6 +399,16 @@ void train_imitator::tab_commands(void)
 
     stat_check_boxes_retr(); // считывание команд из чекбоксов
     errors_printing();       // печать ошибок в строку Служебной информации
+
+
+    // тестируем отправку сообщений
+    canmsg_t tx_data;
+    tx_data.id = 0x161;
+    memcpy(tx_data.data, tx_time, 8);
+    tx_data.len = 8;
+    error = CiTransmit(0, &tx_data);
+    qDebug() << "CiTransmit error " << error;
+
 }
 
 
