@@ -74,10 +74,19 @@ void train_imitator::on_btn_connect(void)
     {
         can_error_handler(board_info());            // счит. инфо об адаптере (проверяем его наличие)
         can_error_handler(CiOpen(0, CIO_CAN11));    // открываем канал 0
-
-        ui->pushButton_5->setText("подключено");
-
+        can_error_handler(CiSetBaud(0, BCI_250K));  // кофигурируем канал
+        can_error_handler(CiStart(0));              // запускаем канал
+        ui->pushButton_5->setText("отключить х");
         cnt++;
+    }
+    else
+    {
+        can_error_handler(CiStop(0));               // останавливаем канал
+        can_error_handler(CiClose(0));              // закрываем канал 0
+        ui->pushButton_5->setText("подключить->");
+        ui->label_2->setText("Адаптер отключен");
+        ui->label_2->setStyleSheet("QLabel{color: rgb(0, 0, 0); }");  // делаем текст чёрным
+        cnt = 0;
     }
 }
 

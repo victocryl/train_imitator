@@ -19,6 +19,7 @@ SOURCES += \
 
 HEADERS += \
     bits.h \
+    chai.h \
     train_imitator.h
 
 FORMS += \

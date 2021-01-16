@@ -6311,7 +6311,7 @@
          </font>
         </property>
         <property name="text">
-         <string/>
+         <string>Подключите USB-CAN адаптер &quot;Марафон&quot; к сети при помощи  разъёма №1</string>
         </property>
        </widget>
       </item>
