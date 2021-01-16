@@ -27,3 +27,8 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+win32: LIBS += -L$$PWD/./ -lchai
+
+INCLUDEPATH += $$PWD/.
+DEPENDPATH += $$PWD/.

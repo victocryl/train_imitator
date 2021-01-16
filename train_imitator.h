@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QDebug>
+#include <chai.h>
 
 #define ID_TIME         0x10   // посылка даты и времени (для линии В 0x60)
 #define ID_POST_START   0x50   // посылка отложенного старта (для линии В 0x90)
