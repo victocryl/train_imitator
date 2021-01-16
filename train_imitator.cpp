@@ -20,6 +20,7 @@ train_imitator::train_imitator(QWidget *parent)
 
     // группа методов коннект для can
     connect(ui->pushButton_5, SIGNAL(clicked(bool)), this, SLOT(on_btn_connect())); // на нажате кнопки "подключиться"
+    connect(ui->pushButton_2, SIGNAL(clicked(bool)), this, SLOT(on_btn_receive())); // на нажате кнопки "получить диаг"
 
 }
 

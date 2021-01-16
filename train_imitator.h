@@ -108,6 +108,7 @@ private slots:
     void service(void);
 
     void on_btn_connect(void);
+    void on_btn_receive(void);
 
 
 

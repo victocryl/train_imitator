@@ -90,3 +90,19 @@ void train_imitator::on_btn_connect(void)
     }
 }
 
+
+void train_imitator::on_btn_receive(void)
+{
+    canmsg_t rx_data;
+    qDebug() << "CiRead" << CiRead(0, &rx_data, 1);
+    qDebug() << "ID" << rx_data.id;
+
+
+    for(uint8_t i=0; i<8; i++)
+    {
+        qDebug() << "data" << i <<rx_data.data[i];
+    }
+
+
+
+}
