@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include <QDebug>
+#include <QTimer>
+#include <QTime>
 #include <chai.h>
 
 #define ID_TIME         0x10   // посылка даты и времени (для линии В 0x60)
@@ -28,13 +30,18 @@ private:
 
 Ui::train_imitator *ui;
 
+QTimer *timer_sys_time;
+QTimer *timer_post_start;
+QTimer *timer_commands;
+QTimer *timer_diag_data;
+
 /*******  вспомогательные переменные *************/
     bool str_error;
     QString brd_name;       // наименование платы адаптера
     QString brd_manuf;      // производитель платы
 
 /*******  рабочие переменные *************/
-
+uint8_t can_stat;   // статус сети can (готова к работе или нет)
 
 /*******  массивы rx, tx can-посылок *************/
     uint8_t tx_time[8];             // 0x10 посылка даты и времени (для линии В 0x60)
@@ -75,10 +82,17 @@ Ui::train_imitator *ui;
         ER_CHECK_BOX
     }TE_input_errors;
 
+    typedef enum on_off
+    {
+        OFF,
+        ON
+    }TE_on_off;
+
 /*******  методы ******************************/
     // первичная инициализация
     void interface_init(void);      // первичная инициализация интерфейса
     void can_arrays_init(void);     // инициализация can массивов нулями
+    void timers_init(void);         // инициализация и запуск таймеров
 
     void diag_simulate(void);       // для тестов - симуляция посылки rx_diag_data
     void failuries_simulate(void);  // для тестов - симуляция посылки rx_failuries
@@ -109,6 +123,11 @@ private slots:
 
     void on_btn_connect(void);
     void on_btn_receive(void);
+
+    void send_sys_time(void);
+//    void send_post_start(void);
+//    void send_commands(void);
+    void receive_diag_data(void);
 
 
 

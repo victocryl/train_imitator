@@ -12,6 +12,10 @@ train_imitator::train_imitator(QWidget *parent)
     interface_init();   // первичная инициализации интерфейса
     can_arrays_init();  // инициализируем нулями массивы can
     memcpy(input_errors, init_array, 8);   // хранит ошибки ввода данных
+    timers_init();     // инициализация и запуск таймеров
+
+
+    ui->label_9->setText(QTime::currentTime().toString("hh:mm:ss"));  // текущее время
 
     connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(tab_commands())); // кнопка "задать параметры"
     connect(ui->pushButton_2, SIGNAL(clicked(bool)), this, SLOT(diag()));       // получение diag-посылки
@@ -21,6 +25,11 @@ train_imitator::train_imitator(QWidget *parent)
     // группа методов коннект для can
     connect(ui->pushButton_5, SIGNAL(clicked(bool)), this, SLOT(on_btn_connect())); // на нажате кнопки "подключиться"
     connect(ui->pushButton_2, SIGNAL(clicked(bool)), this, SLOT(on_btn_receive())); // на нажате кнопки "получить диаг"
+
+    // группа слотов таймеров для регулярных отправок посылок can
+    connect(timer_sys_time, SIGNAL(timeout()), this, SLOT(send_sys_time()));
+    connect(timer_diag_data, SIGNAL(timeout()), this, SLOT(receive_diag_data()));
+
 
 }
 
@@ -68,6 +77,8 @@ void train_imitator::interface_init(void)
  */
 void train_imitator::can_arrays_init(void)
 {
+    can_stat = OFF;   // статус адаптера - откл.
+
     uint8_t init_array[8] = {0, 0, 0, 0, 0, 0, 0, 0};
     memcpy(tx_time, init_array, 8);
     memcpy(tx_post_start, init_array, 8);
@@ -81,6 +92,21 @@ void train_imitator::can_arrays_init(void)
     failuries_simulate();
     service_simulate();
 
+}
+
+void train_imitator::timers_init(void)
+{
+    // создаём объекты таймеров
+    timer_sys_time = new QTimer();   // объект таймера системного времени
+//    timer_post_start = new QTimer(); // объект таймера отлож. старта
+//    timer_commands = new QTimer();   // объект таймера команд
+    timer_diag_data = new QTimer();   // объект таймера команд
+
+    // и запускаем их каждый со своим периодом
+    //timer_sys_time->start(1000);
+//    timer_post_start->start(1000);
+//    timer_commands->start(100);
+    timer_diag_data->start(10000);
 }
 
 

@@ -68,16 +68,14 @@ _s16 train_imitator::board_info(void)
  */
 void train_imitator::on_btn_connect(void)
 {
-    static uint8_t cnt = 0; // счётчик нажатий на кнопку "подключить"
-
-    if(cnt == 0)
+    if(can_stat == OFF)
     {
         can_error_handler(board_info());            // счит. инфо об адаптере (проверяем его наличие)
         can_error_handler(CiOpen(0, CIO_CAN11));    // открываем канал 0
         can_error_handler(CiSetBaud(0, BCI_250K));  // кофигурируем канал
         can_error_handler(CiStart(0));              // запускаем канал
         ui->pushButton_5->setText("отключить х");
-        cnt++;
+        can_stat = ON;
     }
     else
     {
@@ -86,7 +84,7 @@ void train_imitator::on_btn_connect(void)
         ui->pushButton_5->setText("подключить->");
         ui->label_2->setText("Адаптер отключен");
         ui->label_2->setStyleSheet("QLabel{color: rgb(0, 0, 0); }");  // делаем текст чёрным
-        cnt = 0;
+        can_stat = OFF;
     }
 }
 
@@ -105,4 +103,40 @@ void train_imitator::on_btn_receive(void)
 
 
 
+}
+
+/* @brief  Метод слота на достижение счёта счётчика timer_sys_time
+ * @param  None
+ * @retval None
+ */
+void train_imitator::send_sys_time(void)
+{
+    if(can_stat)    // если адаптер подключен
+    {
+        canmsg_t tx_data;
+        tx_data.id = 0x161;
+        memcpy(tx_data.data, tx_time, 8);
+        tx_data.len = 8;
+        qDebug() << "CiTransmit error " <<CiTransmit(0, &tx_data);
+    }
+}
+
+/* @brief  Метод слота на достижение счёта счётчика timer_diag_data
+ * (происходит считывание очереди принятых посылок)
+ * @param  None
+ * @retval None
+ */
+void train_imitator::receive_diag_data(void)
+{
+    if(can_stat)    // если адаптер подключен
+    {
+        canmsg_t rx_data;
+        qDebug() << "CiRead" << CiRead(0, &rx_data, 1);
+        qDebug() << "ID" << rx_data.id;
+
+        for(uint8_t i=0; i<8; i++)
+        {
+            qDebug() << "data" << i <<rx_data.data[i];
+        }
+    }
 }
