@@ -26,7 +26,7 @@ train_imitator::train_imitator(QWidget *parent)
     connect(timer_sys_time, SIGNAL(timeout()), this, SLOT(send_sys_time()));
     connect(timer_post_start, SIGNAL(timeout()), this, SLOT(send_post_start()));
     connect(timer_commands, SIGNAL(timeout()), this, SLOT(send_commands()));
-    connect(timer_diag_data, SIGNAL(timeout()), this, SLOT(receive_all_msgs()));
+    connect(timer_rx_data, SIGNAL(timeout()), this, SLOT(receive_all_msgs()));
 
 
 }
@@ -98,13 +98,13 @@ void train_imitator::timers_init(void)
     timer_sys_time = new QTimer();   // объект таймера системного времени
     timer_post_start = new QTimer(); // объект таймера отлож. старта
     timer_commands = new QTimer();   // объект таймера команд
-    timer_diag_data = new QTimer();   // объект таймера диагностических данных
+    timer_rx_data = new QTimer();   // объект таймера диагностических данных
 
     // и запускаем их каждый со своим периодом
     timer_sys_time->start(1000);      // 50
     timer_post_start->start(1000);    // 1000
     timer_commands->start(1000);       // 100
-    timer_diag_data->start(200);       // 3 посылки с интервалом 100 мс
+    timer_rx_data->start(200);       // 3 посылки с интервалом 100 мс
 }
 
 

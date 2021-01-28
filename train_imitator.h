@@ -33,7 +33,7 @@ Ui::train_imitator *ui;
 QTimer *timer_sys_time;
 QTimer *timer_post_start;
 QTimer *timer_commands;
-QTimer *timer_diag_data;
+QTimer *timer_rx_data;
 
 /*******  вспомогательные переменные *************/
     bool str_error;
