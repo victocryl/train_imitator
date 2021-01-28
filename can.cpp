@@ -100,9 +100,6 @@ void train_imitator::on_btn_receive(void)
     {
         qDebug() << "data" << i <<rx_data.data[i];
     }
-
-
-
 }
 
 /* @brief  Метод слота на достижение счёта счётчика timer_sys_time
@@ -114,10 +111,42 @@ void train_imitator::send_sys_time(void)
     if(can_stat)    // если адаптер подключен
     {
         canmsg_t tx_data;
-        tx_data.id = 0x161;
+        tx_data.id = ID_TIME;
         memcpy(tx_data.data, tx_time, 8);
         tx_data.len = 8;
-        qDebug() << "CiTransmit error " <<CiTransmit(0, &tx_data);
+        CiTransmit(0, &tx_data);
+    }
+}
+
+/* @brief  Метод слота на достижение счёта счётчика timer_post_start
+ * @param  None
+ * @retval None
+ */
+void train_imitator::send_post_start(void)
+{
+    if(can_stat)    // если адаптер подключен
+    {
+        canmsg_t tx_data;
+        tx_data.id = ID_POST_START;
+        memcpy(tx_data.data, tx_post_start, 8);
+        tx_data.len = 8;
+        CiTransmit(0, &tx_data);
+    }
+}
+
+/* @brief  Метод слота на достижение счёта счётчика timer_commands
+ * @param  None
+ * @retval None
+ */
+void train_imitator::send_commands(void)
+{
+    if(can_stat)    // если адаптер подключен
+    {
+        canmsg_t tx_data;
+        tx_data.id = ID_COMMANDS;
+        memcpy(tx_data.data, tx_commands, 8);
+        tx_data.len = 8;
+        CiTransmit(0, &tx_data);
     }
 }
 
@@ -130,13 +159,14 @@ void train_imitator::receive_diag_data(void)
 {
     if(can_stat)    // если адаптер подключен
     {
-        canmsg_t rx_data;
-        qDebug() << "CiRead" << CiRead(0, &rx_data, 1);
-        qDebug() << "ID" << rx_data.id;
-
-        for(uint8_t i=0; i<8; i++)
-        {
-            qDebug() << "data" << i <<rx_data.data[i];
-        }
+        qDebug() << "receive_diag_data(void)";
+//        canmsg_t rx_data;
+//        qDebug() << "CiRead" << CiRead(0, &rx_data, 1);
+//        qDebug() << "ID" << rx_data.id;
+//        qDebug() << "zdczsdfsd";
+//        for(uint8_t i=0; i<8; i++)
+//        {
+//            qDebug() << "data" << i <<rx_data.data[i];
+//        }
     }
 }

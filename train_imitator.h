@@ -125,8 +125,8 @@ private slots:
     void on_btn_receive(void);
 
     void send_sys_time(void);
-//    void send_post_start(void);
-//    void send_commands(void);
+    void send_post_start(void);
+    void send_commands(void);
     void receive_diag_data(void);
 
 
