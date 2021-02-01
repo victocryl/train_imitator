@@ -117,6 +117,7 @@ void train_imitator::send_sys_time(void)
         tx_data.id = 0x161;
         memcpy(tx_data.data, tx_time, 8);
         tx_data.len = 8;
+        qDebug() << "send_sys_time(void)";
         qDebug() << "CiTransmit error " <<CiTransmit(0, &tx_data);
     }
 }
@@ -130,13 +131,14 @@ void train_imitator::receive_diag_data(void)
 {
     if(can_stat)    // если адаптер подключен
     {
-        canmsg_t rx_data;
-        qDebug() << "CiRead" << CiRead(0, &rx_data, 1);
-        qDebug() << "ID" << rx_data.id;
-
-        for(uint8_t i=0; i<8; i++)
-        {
-            qDebug() << "data" << i <<rx_data.data[i];
-        }
+        qDebug() << "receive_diag_data(void)";
+//        canmsg_t rx_data;
+//        qDebug() << "CiRead" << CiRead(0, &rx_data, 1);
+//        qDebug() << "ID" << rx_data.id;
+//        qDebug() << "zdczsdfsd";
+//        for(uint8_t i=0; i<8; i++)
+//        {
+//            qDebug() << "data" << i <<rx_data.data[i];
+//        }
     }
 }

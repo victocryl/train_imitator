@@ -103,10 +103,10 @@ void train_imitator::timers_init(void)
     timer_diag_data = new QTimer();   // объект таймера команд
 
     // и запускаем их каждый со своим периодом
-    //timer_sys_time->start(1000);
-//    timer_post_start->start(1000);
-//    timer_commands->start(100);
-    timer_diag_data->start(10000);
+    timer_sys_time->start(1000);      // 50
+//    timer_post_start->start(1000);    // 1000
+//    timer_commands->start(100);       // 100
+//    timer_diag_data->start(1000);
 }
 
 
