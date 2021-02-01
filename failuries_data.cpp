@@ -7,7 +7,7 @@
 
 
 /* ***************************************************************************************
- *  СЛОТЫ
+ *  МЕТОДЫ
  * ***************************************************************************************
  */
 
@@ -16,7 +16,7 @@
  * @param  None
  * @retval None
  */
-void train_imitator::failuries(void)
+void train_imitator::gui_failuries(void)
 {
     // rx_failuries[AH]
     if(rx_failuries[AH] & BIT_3000_V_OTSUT){ui->checkBox_73->setCheckState(Qt::Checked);}

@@ -68,11 +68,16 @@ _s16 train_imitator::board_info(void)
  */
 void train_imitator::on_btn_connect(void)
 {
+    _u16 trqcnt = 0;    // вспом. перем. для хранения кол-ва стёртых посылок
+    _u16 * ptr_trqcnt = &trqcnt;
+
     if(can_stat == OFF)
     {
         can_error_handler(board_info());            // счит. инфо об адаптере (проверяем его наличие)
         can_error_handler(CiOpen(0, CIO_CAN11));    // открываем канал 0
-        can_error_handler(CiSetBaud(0, BCI_250K));  // кофигурируем канал
+        can_error_handler(CiSetBaud(0, BCI_250K));  // кофигурируем канал (устанавливаем скорость)
+        can_error_handler(CiRcQueResize(0, 3));     // кофигурируем канал (размер очереди приёма)
+        CiTrCancel(0, ptr_trqcnt);                  // стираем содержимое очереди приёма
         can_error_handler(CiStart(0));              // запускаем канал
         ui->pushButton_5->setText("отключить х");
         can_stat = ON;
@@ -100,9 +105,6 @@ void train_imitator::on_btn_receive(void)
     {
         qDebug() << "data" << i <<rx_data.data[i];
     }
-
-
-
 }
 
 /* @brief  Метод слота на достижение счёта счётчика timer_sys_time
@@ -114,11 +116,47 @@ void train_imitator::send_sys_time(void)
     if(can_stat)    // если адаптер подключен
     {
         canmsg_t tx_data;
-        tx_data.id = 0x161;
+        tx_data.id = ID_TIME;
         memcpy(tx_data.data, tx_time, 8);
         tx_data.len = 8;
+<<<<<<< HEAD
         qDebug() << "send_sys_time(void)";
         qDebug() << "CiTransmit error " <<CiTransmit(0, &tx_data);
+=======
+        CiTransmit(0, &tx_data);
+    }
+}
+
+/* @brief  Метод слота на достижение счёта счётчика timer_post_start
+ * @param  None
+ * @retval None
+ */
+void train_imitator::send_post_start(void)
+{
+    if(can_stat)    // если адаптер подключен
+    {
+        canmsg_t tx_data;
+        tx_data.id = ID_POST_START;
+        memcpy(tx_data.data, tx_post_start, 8);
+        tx_data.len = 8;
+        CiTransmit(0, &tx_data);
+    }
+}
+
+/* @brief  Метод слота на достижение счёта счётчика timer_commands
+ * @param  None
+ * @retval None
+ */
+void train_imitator::send_commands(void)
+{
+    if(can_stat)    // если адаптер подключен
+    {
+        canmsg_t tx_data;
+        tx_data.id = ID_COMMANDS;
+        memcpy(tx_data.data, tx_commands, 8);
+        tx_data.len = 8;
+        CiTransmit(0, &tx_data);
+>>>>>>> 69c81e37e7b28872f25445f9a9df5e5c8125699c
     }
 }
 
@@ -127,10 +165,11 @@ void train_imitator::send_sys_time(void)
  * @param  None
  * @retval None
  */
-void train_imitator::receive_diag_data(void)
+void train_imitator::receive_all_msgs(void)
 {
     if(can_stat)    // если адаптер подключен
     {
+<<<<<<< HEAD
         qDebug() << "receive_diag_data(void)";
 //        canmsg_t rx_data;
 //        qDebug() << "CiRead" << CiRead(0, &rx_data, 1);
@@ -140,5 +179,62 @@ void train_imitator::receive_diag_data(void)
 //        {
 //            qDebug() << "data" << i <<rx_data.data[i];
 //        }
+=======
+        CiRead(0, rx_buffer, 2);    // считываем 2-е посылки из очереди
+
+        // обрабатываем 0-й элемент
+        switch(rx_buffer[0].id)
+        {
+        case ID_DIAG:
+            memcpy(rx_diag_data, rx_buffer[0].data, 8); // копируем элемент 0
+            gui_diag();                                 // обновляем gui диагн. данными
+            break;
+        case ID_FAILS:
+            memcpy(rx_failuries, rx_buffer[0].data, 8); // копируем элемент 1
+            gui_failuries();                            // обновляем gui данными неиспр.
+            break;
+        case ID_SERVICE:
+            memcpy(rx_service_info, rx_buffer[0].data, 8); // копируем элемент 2
+            gui_service();                                 // обновляем gui данными сервиса
+            break;
+        default: break;
+        }
+
+        // обрабатываем 1-й элемент
+        switch(rx_buffer[1].id)
+        {
+        case ID_DIAG:
+            memcpy(rx_diag_data, rx_buffer[1].data, 8); // копируем элемент 0
+            gui_diag();                                 // обновляем gui диагн. данными
+            break;
+        case ID_FAILS:
+            memcpy(rx_failuries, rx_buffer[1].data, 8); // копируем элемент 1
+            gui_failuries();                            // обновляем gui данными неиспр.
+            break;
+        case ID_SERVICE:
+            memcpy(rx_service_info, rx_buffer[1].data, 8); // копируем элемент 2
+            gui_service();                                 // обновляем gui данными сервиса
+            break;
+        default: break;
+        }
+
+        // обрабатываем 2-й элемент
+        switch(rx_buffer[2].id)
+        {
+        case ID_DIAG:
+            memcpy(rx_diag_data, rx_buffer[2].data, 8); // копируем элемент 0
+            gui_diag();                                 // обновляем gui диагн. данными
+            break;
+        case ID_FAILS:
+            memcpy(rx_failuries, rx_buffer[2].data, 8); // копируем элемент 1
+            gui_failuries();                            // обновляем gui данными неиспр.
+            break;
+        case ID_SERVICE:
+            memcpy(rx_service_info, rx_buffer[2].data, 8); // копируем элемент 2
+            gui_service();                                 // обновляем gui данными сервиса
+            break;
+        default: break;
+        }
+>>>>>>> 69c81e37e7b28872f25445f9a9df5e5c8125699c
     }
 }

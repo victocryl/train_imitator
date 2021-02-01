@@ -33,7 +33,7 @@ Ui::train_imitator *ui;
 QTimer *timer_sys_time;
 QTimer *timer_post_start;
 QTimer *timer_commands;
-QTimer *timer_diag_data;
+QTimer *timer_rx_data;
 
 /*******  вспомогательные переменные *************/
     bool str_error;
@@ -51,6 +51,7 @@ uint8_t can_stat;   // статус сети can (готова к работе �
     uint8_t rx_failuries[8];        // 0x1F5 посылка с ошибками УКВ (для линии В 0x201)
     uint8_t rx_service_info[8];     // 0x1F6 посылка с сервисной информацией (для линии В 0x202)
     uint8_t init_array[8];
+    canmsg_t rx_buffer[3];
 
     uint8_t input_errors[8];    // массив ошибок ввода данных
 
@@ -112,25 +113,24 @@ uint8_t can_stat;   // статус сети can (готова к работе �
     uint8_t cmd_check_boxes_retr(void);// считывание команд из чекбоксов
     void stat_check_boxes_retr(void);  // считывание статусов из чекбоксов
 
-    void errors_printing(void);        // вывод ошибок в Служ. Информацию
+    // обновление gui
+    void gui_diag(void);          // обновление gui данными диагностики
+    void gui_failuries(void);     // обновление gui данными неисправностей
+    void gui_service(void);       // обновление gui данными сервиса
+
+    void errors_printing(void); // вывод ошибок в Служ. Информацию
 
 /*******  слоты *******************************/
 private slots:
     void tab_commands(void);
-    void diag(void);
-    void failuries(void);
-    void service(void);
 
     void on_btn_connect(void);
     void on_btn_receive(void);
 
     void send_sys_time(void);
-//    void send_post_start(void);
-//    void send_commands(void);
-    void receive_diag_data(void);
-
-
-
+    void send_post_start(void);
+    void send_commands(void);
+    void receive_all_msgs(void);
 
 };
 #endif // TRAIN_IMITATOR_H
