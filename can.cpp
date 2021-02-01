@@ -119,10 +119,6 @@ void train_imitator::send_sys_time(void)
         tx_data.id = ID_TIME;
         memcpy(tx_data.data, tx_time, 8);
         tx_data.len = 8;
-<<<<<<< HEAD
-        qDebug() << "send_sys_time(void)";
-        qDebug() << "CiTransmit error " <<CiTransmit(0, &tx_data);
-=======
         CiTransmit(0, &tx_data);
     }
 }
@@ -156,7 +152,6 @@ void train_imitator::send_commands(void)
         memcpy(tx_data.data, tx_commands, 8);
         tx_data.len = 8;
         CiTransmit(0, &tx_data);
->>>>>>> 69c81e37e7b28872f25445f9a9df5e5c8125699c
     }
 }
 
@@ -169,17 +164,6 @@ void train_imitator::receive_all_msgs(void)
 {
     if(can_stat)    // если адаптер подключен
     {
-<<<<<<< HEAD
-        qDebug() << "receive_diag_data(void)";
-//        canmsg_t rx_data;
-//        qDebug() << "CiRead" << CiRead(0, &rx_data, 1);
-//        qDebug() << "ID" << rx_data.id;
-//        qDebug() << "zdczsdfsd";
-//        for(uint8_t i=0; i<8; i++)
-//        {
-//            qDebug() << "data" << i <<rx_data.data[i];
-//        }
-=======
         CiRead(0, rx_buffer, 2);    // считываем 2-е посылки из очереди
 
         // обрабатываем 0-й элемент
@@ -235,6 +219,5 @@ void train_imitator::receive_all_msgs(void)
             break;
         default: break;
         }
->>>>>>> 69c81e37e7b28872f25445f9a9df5e5c8125699c
     }
 }
