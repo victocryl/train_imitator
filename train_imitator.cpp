@@ -102,15 +102,9 @@ void train_imitator::timers_init(void)
 
     // и запускаем их каждый со своим периодом
     timer_sys_time->start(1000);      // 50
-<<<<<<< HEAD
-//    timer_post_start->start(1000);    // 1000
-//    timer_commands->start(100);       // 100
-//    timer_diag_data->start(1000);
-=======
     timer_post_start->start(1000);    // 1000
     timer_commands->start(1000);       // 100
     timer_rx_data->start(200);       // 3 посылки с интервалом 100 мс
->>>>>>> 69c81e37e7b28872f25445f9a9df5e5c8125699c
 }
 
 
