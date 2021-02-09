@@ -58,14 +58,14 @@ uint8_t can_stat;   // статус сети can (готова к работе �
 /*******  enum байтов посылок Can *************/
     typedef enum canbytes
     {
-        AH,
         AL,
-        BH,
+        AH,
         BL,
-        CH,
+        BH,
         CL,
-        DH,
+        CH,
         DL,
+        DH,
         DATA_NUM
     }TE_canbytes;
 

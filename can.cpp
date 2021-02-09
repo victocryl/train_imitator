@@ -164,21 +164,21 @@ void train_imitator::receive_all_msgs(void)
 {
     if(can_stat)    // если адаптер подключен
     {
-        CiRead(0, rx_buffer, 2);    // считываем 2-е посылки из очереди
+        CiRead(0, rx_buffer, 2);    // считываем 3-и посылки из очереди
 
         // обрабатываем 0-й элемент
         switch(rx_buffer[0].id)
         {
         case ID_DIAG:
-            memcpy(rx_diag_data, rx_buffer[0].data, 8); // копируем элемент 0
+            memcpy(rx_diag_data, rx_buffer[0].data, 8);
             gui_diag();                                 // обновляем gui диагн. данными
             break;
         case ID_FAILS:
-            memcpy(rx_failuries, rx_buffer[0].data, 8); // копируем элемент 1
+            memcpy(rx_failuries, rx_buffer[0].data, 8);
             gui_failuries();                            // обновляем gui данными неиспр.
             break;
         case ID_SERVICE:
-            memcpy(rx_service_info, rx_buffer[0].data, 8); // копируем элемент 2
+            memcpy(rx_service_info, rx_buffer[0].data, 8);
             gui_service();                                 // обновляем gui данными сервиса
             break;
         default: break;
@@ -188,15 +188,15 @@ void train_imitator::receive_all_msgs(void)
         switch(rx_buffer[1].id)
         {
         case ID_DIAG:
-            memcpy(rx_diag_data, rx_buffer[1].data, 8); // копируем элемент 0
+            memcpy(rx_diag_data, rx_buffer[1].data, 8);
             gui_diag();                                 // обновляем gui диагн. данными
             break;
         case ID_FAILS:
-            memcpy(rx_failuries, rx_buffer[1].data, 8); // копируем элемент 1
+            memcpy(rx_failuries, rx_buffer[1].data, 8);
             gui_failuries();                            // обновляем gui данными неиспр.
             break;
         case ID_SERVICE:
-            memcpy(rx_service_info, rx_buffer[1].data, 8); // копируем элемент 2
+            memcpy(rx_service_info, rx_buffer[1].data, 8);
             gui_service();                                 // обновляем gui данными сервиса
             break;
         default: break;
@@ -206,15 +206,15 @@ void train_imitator::receive_all_msgs(void)
         switch(rx_buffer[2].id)
         {
         case ID_DIAG:
-            memcpy(rx_diag_data, rx_buffer[2].data, 8); // копируем элемент 0
+            memcpy(rx_diag_data, rx_buffer[2].data, 8);
             gui_diag();                                 // обновляем gui диагн. данными
             break;
         case ID_FAILS:
-            memcpy(rx_failuries, rx_buffer[2].data, 8); // копируем элемент 1
+            memcpy(rx_failuries, rx_buffer[2].data, 8);
             gui_failuries();                            // обновляем gui данными неиспр.
             break;
         case ID_SERVICE:
-            memcpy(rx_service_info, rx_buffer[2].data, 8); // копируем элемент 2
+            memcpy(rx_service_info, rx_buffer[2].data, 8);
             gui_service();                                 // обновляем gui данными сервиса
             break;
         default: break;

@@ -20,10 +20,12 @@
  */
 void train_imitator::gui_diag(void)
 {
-    uint16_t tmp_ambient_temp = 0;   // температура наружного воздуха
-    uint16_t tmp_cab_temp = 0;       // температура в салоне
+    int16_t tmp_ambient_temp = 0;   // температура наружного воздуха
+    int16_t tmp_cab_temp = 0;       // температура в салоне
     uint16_t version_maj = 0;        // версия ПО мажорная
     uint16_t version_min = 0;        // версия ПО минорная
+    float tmp_amb = 0;
+    float tmp_cab = 0;
 
     // rx_diag_data[AH]
     if((rx_diag_data[AH] & DIAG_MASK) == BIT_REZH_OFF){ui->checkBox_29->setCheckState(Qt::Checked);}
@@ -54,12 +56,14 @@ void train_imitator::gui_diag(void)
     // rx_diag_data[BH] и rx_diag_data[BL] - наружная температура
     tmp_ambient_temp = (rx_diag_data[BH] << 8);
     tmp_ambient_temp |= rx_diag_data[BL];
-    ui->label_13->setText(QString::number(tmp_ambient_temp/10)+" °C");
+    tmp_amb = ((float)tmp_ambient_temp)/10;
+    ui->label_13->setText(QString::number(tmp_amb)+" °C");
 
     // rx_diag_data[СH] и rx_diag_data[CL] - температура в салоне
     tmp_cab_temp = (rx_diag_data[CH] << 8);
     tmp_cab_temp |= rx_diag_data[CL];
-    ui->label_15->setText(QString::number(tmp_cab_temp/10)+" °C");
+    tmp_cab = ((float)tmp_cab_temp)/10;
+    ui->label_15->setText(QString::number(tmp_cab)+" °C");
 
     // rx_diag_data[СH] и rx_diag_data[CL] - версия ПО
     version_maj = rx_diag_data[DH];
