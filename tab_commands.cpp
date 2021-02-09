@@ -192,21 +192,22 @@ uint8_t train_imitator::ambient_temp_retr(void)
 {
     // **********  считываем температуру  *****************************
     QString str = ui->lineEdit_16->text();    // забираем текст из строки
-    uint16_t t = 10 * str.toInt(&str_error, 10);  // переводим в int
+    float t = 10 * str.toFloat();  // переводим во флоат
+    int16_t tmp_t = (int16_t)t;
 
      // проверяем данные на адекватность
-     if((t == 0) || (t > 850))
+     if((tmp_t < -600) || (tmp_t > 850))
      {
          tx_commands[CH] = tx_commands[CL] = 0; // обуляем все данные
          return ER_AIR_TEMP;
      }
      else
      {  // если прошли проверку
-         tx_commands[CH] = t>>8;
-         tx_commands[CL] = t;
+         tx_commands[CL] = tmp_t>>8;
+         tx_commands[CH] = tmp_t;
 
          // помещаем данные в окно в шапке интерфейса
-         ui->label_13->setText(QString::number(t));
+         ui->label_13->setText(QString::number(tmp_t));
 
          return NO_INPUT_ERRORS;
      }
