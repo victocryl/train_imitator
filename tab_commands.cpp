@@ -202,7 +202,7 @@ uint8_t train_imitator::ambient_temp_retr(void)
          return ER_AIR_TEMP;
      }
      else
-     {  // если прошли проверку
+     {  // если прошли проверку...
          tx_commands[CL] = tmp_t>>8;
          tx_commands[CH] = tmp_t;
 
