@@ -192,7 +192,7 @@ uint8_t train_imitator::ambient_temp_retr(void)
 {
     // **********  считываем температуру  *****************************
     QString str = ui->lineEdit_16->text();    // забираем текст из строки
-    uint16_t t = str.toInt(&str_error, 10);  // переводим в int
+    uint16_t t = 10 * str.toInt(&str_error, 10);  // переводим в int
 
      // проверяем данные на адекватность
      if((t == 0) || (t > 850))
