@@ -18,7 +18,7 @@
  */
 void train_imitator::gui_service(void)
 {
-    uint16_t tmp_life_cnt = 0;  // счётчик жизни
+    uint8_t tmp_life_cnt = 0;  // счётчик жизни
 
     // rx_service_info[AH]
     if(rx_service_info[AH] & BIT_VOZD_FILTR_ZASOR){ui->checkBox_40->setCheckState(Qt::Checked);}
@@ -42,9 +42,8 @@ void train_imitator::gui_service(void)
     if(rx_service_info[AL] & BIT_RESURS_VENT_COND_ZAKON){ui->checkBox_68->setCheckState(Qt::Checked);}
     else{ui->checkBox_68->setCheckState(Qt::Unchecked);}
 
-    // rx_service_info[BH] и rx_service_info[BL] - счётчик жизни
-    tmp_life_cnt = (rx_service_info[BH] << 8);
-    tmp_life_cnt |= rx_service_info[BL];
+    // rx_service_info[BL] - счётчик жизни
+    tmp_life_cnt = rx_service_info[BH];
     ui->label_85->setText(QString::number(tmp_life_cnt));
 }
 
