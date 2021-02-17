@@ -113,6 +113,10 @@ void train_imitator::on_btn_receive(void)
  */
 void train_imitator::send_sys_time(void)
 {
+    // получаем время, загружаем в массив и выводим в окно интерфейса
+    time_retr();
+
+    // передаём посылку
     if(can_stat)    // если адаптер подключен
     {
         canmsg_t tx_data;
@@ -220,4 +224,26 @@ void train_imitator::receive_all_msgs(void)
         default: break;
         }
     }
+}
+
+/* @brief  Метод считывания системного времени, загрузки данных в tx_time и вывод в шапку интерфейса
+ * @param  None
+ * @retval None
+ */
+void train_imitator::time_retr(void)
+{
+    c_time = QTime::currentTime(); // текущее время
+    minute  = c_time.minute();
+    hour    = c_time.hour();
+    sec_100 = c_time.msec()/10;
+    sec     = c_time.second();
+
+    // загружаем в массив tx_time
+    tx_time[CH] = minute;
+    tx_time[CL] = hour;
+    tx_time[DH] = sec_100;
+    tx_time[DL] = sec;
+
+    // помещаем данные в окно в шапке интерфейса
+    ui->label_9->setText(QString::number(hour)+":"+QString::number(minute)+":"+QString::number(sec));
 }

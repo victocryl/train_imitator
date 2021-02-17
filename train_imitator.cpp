@@ -11,11 +11,12 @@ train_imitator::train_imitator(QWidget *parent)
     CiInit();           // инициализируем библиотеку CHAI для can адаптера
     interface_init();   // первичная инициализации интерфейса
     can_arrays_init();  // инициализируем нулями массивы can
-    memcpy(input_errors, init_array, 8);   // хранит ошибки ввода данных
-    timers_init();     // инициализация и запуск таймеров
+    memset(input_errors, 0, 8);   // хранит ошибки ввода данных
+    timers_init();      // инициализация и запуск таймеров
+    date_retr();        // считываем дату, загружаем в массив tx_time и выводим в шапку интерфейса
 
 
-    ui->label_9->setText(QTime::currentTime().toString("hh:mm:ss"));  // текущее время
+//    ui->label_9->setText(QTime::currentTime().toString("hh:mm:ss"));  // текущее время
 
     connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(tab_commands())); // кнопка "задать параметры"
 
@@ -92,6 +93,10 @@ void train_imitator::can_arrays_init(void)
 
 }
 
+/* @brief  Метод инициализации и запуска всех таймеров приложения
+ * @param  None
+ * @retval None
+ */
 void train_imitator::timers_init(void)
 {
     // создаём объекты таймеров
@@ -105,6 +110,28 @@ void train_imitator::timers_init(void)
     timer_post_start->start(1000);  // 1000
     timer_commands->start(100);     // 100
     timer_rx_data->start(200);      // 3 посылки с интервалом 100 мс
+}
+
+/* @brief  Метод. Здесь считываем дату, загружаем в массив tx_time и выводим дату в шапку интерфейса
+ * @param  None
+ * @retval None
+ */
+void train_imitator::date_retr(void)
+{
+    // получаем текущую дату
+    c_date = QDate::currentDate(); // текущая дата
+    year    = c_date.year();
+    day     = c_date.day();
+    month   = c_date.month();
+
+    // загружаем в массив tx_time
+    tx_time[AH] = (year << 8);
+    tx_time[AL] = year;
+    tx_time[BH] = day;
+    tx_time[BL] = month;
+
+    // помещаем данные в окно в шапке интерфейса
+    ui->label_36->setText(QString::number(day)+"."+QString::number(month)+"."+QString::number(year));
 }
 
 

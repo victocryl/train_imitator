@@ -207,7 +207,7 @@ uint8_t train_imitator::ambient_temp_retr(void)
          tx_commands[CH] = tmp_t;
 
          // помещаем данные в окно в шапке интерфейса
-         ui->label_13->setText(QString::number(tmp_t));
+         ui->label_13->setText(QString::number(tmp_t/10));
 
          return NO_INPUT_ERRORS;
      }
@@ -387,8 +387,8 @@ void train_imitator::errors_printing(void)
  */
 void train_imitator::tab_commands(void)
 {
-    input_errors[0] = sys_date_retr();        // считывание системной даты
-    input_errors[1] = sys_time_retr();        // считывание системного времени
+    //    input_errors[0] = sys_date_retr();        // считывание системной даты по кнопке Задать параметры
+    //    input_errors[1] = sys_time_retr();        // считывание системного времени по кнопке Задать параметры
     input_errors[2] = post_date_retr();       // считывание даты отложенного старта
     input_errors[3] = post_time_retr();       // считывание времени отложенного старта
     input_errors[4] = valid_pwr_400_retr();   // считывание допустимой мощности сети 400 В
@@ -398,6 +398,13 @@ void train_imitator::tab_commands(void)
 
     stat_check_boxes_retr(); // считывание команд из чекбоксов
     errors_printing();       // печать ошибок в строку Служебной информации
+
+    // Это костыль. Нет времени искать почему там случайные числа появляются после нажатия Задать параметры.
+    // Решил тупо обнулять массив после обработки
+    for (int i =0;i<8;i++)
+    {
+        input_errors[i] = 0;
+    }
 }
 
 
