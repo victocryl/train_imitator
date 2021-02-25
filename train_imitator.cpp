@@ -45,6 +45,21 @@ void train_imitator::interface_init(void)
 {
     ui->checkBox_30->setCheckState(Qt::Checked);    // ставим галочку напротив "Отключение"
 
+    // декорируем квадратик "использовать основные ID"
+    ui->widget_6->setStyleSheet("QWidget{ "
+    "background-color: rgb(255, 170, 0);"
+    "border-radius: 10px;"
+    "border-style: solid;"
+    "border-width: 2px;"
+    "border-color: rgb(66, 66, 66); }");
+
+    // декорируем квадратик "использовать резервные ID"
+    ui->widget_25->setStyleSheet("QWidget{ "
+    "border-radius: 10px;"
+    "border-style: solid;"
+    "border-width: 2px;"
+    "border-color: rgb(66, 66, 66); }");
+
     // первичное заполнение lineEdit-ов для целей отладки
     ui->lineEdit_5->setText("5");
     ui->lineEdit_6->setText("5");
