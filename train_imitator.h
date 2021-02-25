@@ -47,6 +47,7 @@ private:
 /*******  рабочие переменные *************/
     uint8_t can_stat;   // статус сети can (готова к работе или нет)
     int year, day, month, minute, hour, sec_100, sec;   // дата и время
+    uint8_t use_id; // индикатор какие id-шники использовать - основные или резервные
 
 /*******  массивы rx, tx can-посылок *************/
     uint8_t tx_time[8];             // 0x10 посылка даты и времени (для линии В 0x60)
@@ -87,6 +88,12 @@ private:
         ER_SET_OFFSET,
         ER_CHECK_BOX
     }TE_input_errors;
+
+    typedef enum id
+    {
+        NORMAL,
+        RESERV
+    }TE_id;
 
     typedef enum on_off
     {
@@ -139,5 +146,7 @@ private slots:
     void send_commands(void);
     void receive_all_msgs(void);
 
+    void on_btn_norm_id(void);
+    void on_btn_reserv_id(void);
 };
 #endif // TRAIN_IMITATOR_H

@@ -8,6 +8,8 @@ train_imitator::train_imitator(QWidget *parent)
 {
     ui->setupUi(this);
 
+    use_id = NORMAL;    // используем нормальные id-шники
+
     CiInit();           // инициализируем библиотеку CHAI для can адаптера
     interface_init();   // первичная инициализации интерфейса
     can_arrays_init();  // инициализируем нулями массивы can
@@ -15,12 +17,9 @@ train_imitator::train_imitator(QWidget *parent)
     timers_init();      // инициализация и запуск таймеров
     date_retr();        // считываем дату, загружаем в массив tx_time и выводим в шапку интерфейса
 
-
-//    ui->label_9->setText(QTime::currentTime().toString("hh:mm:ss"));  // текущее время
-
     connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(tab_commands())); // кнопка "задать параметры"
 
-    // коннект на нажате кнопки "подключиться"
+    // коннект на нажатие кнопки "подключиться"
     connect(ui->pushButton_5, SIGNAL(clicked(bool)), this, SLOT(on_btn_connect()));
 
     // группа слотов таймеров для регулярных отправок посылок can
@@ -28,6 +27,10 @@ train_imitator::train_imitator(QWidget *parent)
     connect(timer_post_start, SIGNAL(timeout()), this, SLOT(send_post_start()));
     connect(timer_commands, SIGNAL(timeout()), this, SLOT(send_commands()));
     connect(timer_rx_data, SIGNAL(timeout()), this, SLOT(receive_all_msgs()));
+
+    // коннекты на нажатие кнопок "Использовать основные/резервные id-шники"
+    connect(ui->pushButton_2, SIGNAL(clicked(bool)), this, SLOT(on_btn_norm_id()));
+    connect(ui->pushButton_3, SIGNAL(clicked(bool)), this, SLOT(on_btn_reserv_id()));
 
 
 }
@@ -45,15 +48,15 @@ void train_imitator::interface_init(void)
 {
     ui->checkBox_30->setCheckState(Qt::Checked);    // ставим галочку напротив "Отключение"
 
-    // декорируем квадратик "использовать основные ID"
+    // декорируем кружочек "использовать основные ID"
     ui->widget_6->setStyleSheet("QWidget{ "
-    "background-color: rgb(255, 170, 0);"
+    "background-color: rgb(244, 122, 0);"
     "border-radius: 10px;"
     "border-style: solid;"
     "border-width: 2px;"
     "border-color: rgb(66, 66, 66); }");
 
-    // декорируем квадратик "использовать резервные ID"
+    // декорируем кружочек "использовать резервные ID"
     ui->widget_25->setStyleSheet("QWidget{ "
     "border-radius: 10px;"
     "border-style: solid;"
@@ -147,6 +150,52 @@ void train_imitator::date_retr(void)
 
     // помещаем данные в окно в шапке интерфейса
     ui->label_36->setText(QString::number(day)+"."+QString::number(month)+"."+QString::number(year));
+}
+
+/* @brief  Метод слота на нажатие кнопки "Использовать основные ID"
+ * @param  None
+ * @retval None
+ */
+void train_imitator::on_btn_norm_id(void)
+{
+    use_id = NORMAL;
+
+    ui->widget_6->setStyleSheet("QWidget{ "
+    "background-color: rgb(244, 122, 0);"
+    "border-radius: 10px;"
+    "border-style: solid;"
+    "border-width: 2px;"
+    "border-color: rgb(66, 66, 66); }");
+
+    ui->widget_25->setStyleSheet("QWidget{ "
+    "background-color: rgb(255, 225, 134);"
+    "border-radius: 10px;"
+    "border-style: solid;"
+    "border-width: 2px;"
+    "border-color: rgb(66, 66, 66); }");
+}
+
+/* @brief  Метод слота на нажатие кнопки "Использовать резервные ID"
+ * @param  None
+ * @retval None
+ */
+void train_imitator::on_btn_reserv_id(void)
+{
+    use_id = RESERV;
+
+    ui->widget_6->setStyleSheet("QWidget{ "
+    "background-color: rgb(255, 225, 134);"
+    "border-radius: 10px;"
+    "border-style: solid;"
+    "border-width: 2px;"
+    "border-color: rgb(66, 66, 66); }");
+
+    ui->widget_25->setStyleSheet("QWidget{ "
+    "background-color: rgb(244, 122, 0);"
+    "border-radius: 10px;"
+    "border-style: solid;"
+    "border-width: 2px;"
+    "border-color: rgb(66, 66, 66); }");
 }
 
 
