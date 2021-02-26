@@ -2922,18 +2922,6 @@
                 </layout>
                </widget>
               </item>
-              <item row="7" column="0">
-               <widget class="QLabel" name="label_63">
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Смещение температурной уставки (°C)</string>
-                </property>
-               </widget>
-              </item>
               <item row="3" column="4">
                <widget class="QLineEdit" name="lineEdit_10">
                 <property name="alignment">
@@ -2945,6 +2933,18 @@
                <widget class="QLineEdit" name="lineEdit_2">
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="0">
+               <widget class="QLabel" name="label_11">
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Смещение темпер. уставки (целые числа 0 ÷ 4, °C)</string>
                 </property>
                </widget>
               </item>
@@ -2973,7 +2973,7 @@
             <item>
              <widget class="QLabel" name="label_10">
               <property name="text">
-               <string>                            *   в данной версии программы системные дата и время подгружаются автоматом с компьютера (в ручную вводить не надо)</string>
+               <string>                            *   в данной версии программы системные дата и время подгружаются автоматом с компьютера (вручную вводить не надо)</string>
               </property>
              </widget>
             </item>

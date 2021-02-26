@@ -225,7 +225,7 @@ uint8_t train_imitator::temp_offset_retr(void)
     uint8_t offset = str.toInt(&str_error, 10);  // переводим в int
 
      // проверяем данные на адекватность
-     if((offset == 0) || (offset > 254))
+     if(offset > 4)
      {
          tx_commands[DH] = tx_commands[DL] = 0; // обуляем все данные
          return ER_SET_OFFSET;

@@ -63,15 +63,15 @@ void train_imitator::interface_init(void)
     "border-width: 2px;"
     "border-color: rgb(66, 66, 66); }");
 
-    // первичное заполнение lineEdit-ов для целей отладки
-    ui->lineEdit_5->setText("5");
-    ui->lineEdit_6->setText("5");
-    ui->lineEdit_7->setText("2021");
+    // первичное заполнение lineEdit-ов
+    ui->lineEdit_5->setText("0");
+    ui->lineEdit_6->setText("0");
+    ui->lineEdit_7->setText("0000");
 
-    ui->lineEdit->setText("5");
-    ui->lineEdit_2->setText("5");
-    ui->lineEdit_3->setText("5");
-    ui->lineEdit_4->setText("5");
+    ui->lineEdit->setText("0");
+    ui->lineEdit_2->setText("0");
+    ui->lineEdit_3->setText("0");
+    ui->lineEdit_4->setText("0");
 
     ui->lineEdit_8->setText("5");
     ui->lineEdit_9->setText("5");
@@ -84,7 +84,7 @@ void train_imitator::interface_init(void)
 
     ui->lineEdit_15->setText("5");
     ui->lineEdit_16->setText("5");
-    ui->lineEdit_17->setText("5");
+    ui->lineEdit_17->setText("2");
 
 }
 
