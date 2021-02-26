@@ -113,6 +113,11 @@ void train_imitator::on_btn_receive(void)
  */
 void train_imitator::send_sys_time(void)
 {
+    uint8_t tmp_id = 0; //  временная переменная для выбора основного или резервного id
+
+    if(use_id == NORMAL){tmp_id = ID_TIME;}
+    else{tmp_id = ID_TIME_RES;}
+
     // получаем время, загружаем в массив и выводим в окно интерфейса
     time_retr();
 
@@ -120,7 +125,7 @@ void train_imitator::send_sys_time(void)
     if(can_stat)    // если адаптер подключен
     {
         canmsg_t tx_data;
-        tx_data.id = ID_TIME;
+        tx_data.id = tmp_id;
         memcpy(tx_data.data, tx_time, 8);
         tx_data.len = 8;
         CiTransmit(0, &tx_data);
@@ -133,10 +138,15 @@ void train_imitator::send_sys_time(void)
  */
 void train_imitator::send_post_start(void)
 {
+    uint8_t tmp_id = 0; //  временная переменная для выбора основного или резервного id
+
+    if(use_id == NORMAL){tmp_id = ID_POST_START;}
+    else{tmp_id = ID_POST_START_RES;}
+
     if(can_stat)    // если адаптер подключен
     {
         canmsg_t tx_data;
-        tx_data.id = ID_POST_START;
+        tx_data.id = tmp_id;
         memcpy(tx_data.data, tx_post_start, 8);
         tx_data.len = 8;
         CiTransmit(0, &tx_data);
@@ -149,10 +159,15 @@ void train_imitator::send_post_start(void)
  */
 void train_imitator::send_commands(void)
 {
+    uint8_t tmp_id = 0; //  временная переменная для выбора основного или резервного id
+
+    if(use_id == NORMAL){tmp_id = ID_COMMANDS;}
+    else{tmp_id = ID_COMMANDS_RES;}
+
     if(can_stat)    // если адаптер подключен
     {
         canmsg_t tx_data;
-        tx_data.id = ID_COMMANDS;
+        tx_data.id = tmp_id;
         memcpy(tx_data.data, tx_commands, 8);
         tx_data.len = 8;
         CiTransmit(0, &tx_data);
@@ -173,6 +188,7 @@ void train_imitator::receive_all_msgs(void)
         // обрабатываем 0-й элемент
         switch(rx_buffer[0].id)
         {
+        // основные id-шники
         case ID_DIAG:
             memcpy(rx_diag_data, rx_buffer[0].data, 8);
             gui_diag();                                 // обновляем gui диагн. данными
@@ -185,12 +201,28 @@ void train_imitator::receive_all_msgs(void)
             memcpy(rx_service_info, rx_buffer[0].data, 8);
             gui_service();                                 // обновляем gui данными сервиса
             break;
+
+        // резервные id-шники
+        case ID_DIAG_RES:
+            memcpy(rx_diag_data, rx_buffer[0].data, 8);
+            gui_diag();                                 // обновляем gui диагн. данными
+            break;
+        case ID_FAILS_RES:
+            memcpy(rx_failuries, rx_buffer[0].data, 8);
+            gui_failuries();                            // обновляем gui данными неиспр.
+            break;
+        case ID_SERVICE_RES:
+            memcpy(rx_service_info, rx_buffer[0].data, 8);
+            gui_service();                                 // обновляем gui данными сервиса
+            break;
+
         default: break;
         }
 
         // обрабатываем 1-й элемент
         switch(rx_buffer[1].id)
         {
+        // основные id-шники
         case ID_DIAG:
             memcpy(rx_diag_data, rx_buffer[1].data, 8);
             gui_diag();                                 // обновляем gui диагн. данными
@@ -203,12 +235,28 @@ void train_imitator::receive_all_msgs(void)
             memcpy(rx_service_info, rx_buffer[1].data, 8);
             gui_service();                                 // обновляем gui данными сервиса
             break;
+
+        // резервные id-шники
+        case ID_DIAG_RES:
+            memcpy(rx_diag_data, rx_buffer[1].data, 8);
+            gui_diag();                                 // обновляем gui диагн. данными
+            break;
+        case ID_FAILS_RES:
+            memcpy(rx_failuries, rx_buffer[1].data, 8);
+            gui_failuries();                            // обновляем gui данными неиспр.
+            break;
+        case ID_SERVICE_RES:
+            memcpy(rx_service_info, rx_buffer[1].data, 8);
+            gui_service();                                 // обновляем gui данными сервиса
+            break;
+
         default: break;
         }
 
         // обрабатываем 2-й элемент
         switch(rx_buffer[2].id)
         {
+        // основные id-шники
         case ID_DIAG:
             memcpy(rx_diag_data, rx_buffer[2].data, 8);
             gui_diag();                                 // обновляем gui диагн. данными
@@ -221,6 +269,21 @@ void train_imitator::receive_all_msgs(void)
             memcpy(rx_service_info, rx_buffer[2].data, 8);
             gui_service();                                 // обновляем gui данными сервиса
             break;
+
+        // резервные id-шники
+        case ID_DIAG_RES:
+            memcpy(rx_diag_data, rx_buffer[2].data, 8);
+            gui_diag();                                 // обновляем gui диагн. данными
+            break;
+        case ID_FAILS_RES:
+            memcpy(rx_failuries, rx_buffer[2].data, 8);
+            gui_failuries();                            // обновляем gui данными неиспр.
+            break;
+        case ID_SERVICE_RES:
+            memcpy(rx_service_info, rx_buffer[2].data, 8);
+            gui_service();                                 // обновляем gui данными сервиса
+            break;
+
         default: break;
         }
     }
