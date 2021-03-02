@@ -3244,7 +3244,7 @@
                </font>
               </property>
               <property name="text">
-               <string>Отказ 2 клапана наружного воздуха</string>
+               <string>Отказ 2 заслонки наружного воздуха</string>
               </property>
              </widget>
             </item>
@@ -3442,7 +3442,7 @@
                </font>
               </property>
               <property name="text">
-               <string>Отказ вентиляторов отработанного воздуха</string>
+               <string>Отказ вытяжного вентилятора</string>
               </property>
              </widget>
             </item>
@@ -3454,7 +3454,7 @@
                </font>
               </property>
               <property name="text">
-               <string>Отказ распред. клапанов отопл./охлажд.</string>
+               <string>Отказ заслонки отопление/охлаждение</string>
               </property>
              </widget>
             </item>
@@ -3520,7 +3520,7 @@
                </font>
               </property>
               <property name="text">
-               <string>Отказ пожарных клапанов</string>
+               <string>Отказ пожарного клапана</string>
               </property>
              </widget>
             </item>
@@ -3598,7 +3598,7 @@
                </font>
               </property>
               <property name="text">
-               <string>Отказ 1 клапана наружного воздуха</string>
+               <string>Отказ 1 заслонки наружного воздуха</string>
               </property>
              </widget>
             </item>
@@ -3742,7 +3742,7 @@
                </font>
               </property>
               <property name="text">
-               <string>Отказ 2 клапана рециркуляционного воздуха</string>
+               <string>Отказ 2 заслонки рециркуляционного воздуха</string>
               </property>
              </widget>
             </item>
@@ -4036,7 +4036,7 @@
                </font>
               </property>
               <property name="text">
-               <string>Отказ 1 клапана рециркуляционного воздуха</string>
+               <string>Отказ 1 заслонки рециркуляционного воздуха</string>
               </property>
              </widget>
             </item>
@@ -4155,7 +4155,7 @@
                </font>
               </property>
               <property name="text">
-               <string>Отказ 1 датчика давления конденсации</string>
+               <string>Отказ 1 датчика давления нагнетания</string>
               </property>
              </widget>
             </item>
@@ -4167,7 +4167,7 @@
                </font>
               </property>
               <property name="text">
-               <string>Отказ 3 лампы обеззараживателя</string>
+               <string>Отказ 3 лампы обеззараживания</string>
               </property>
              </widget>
             </item>
@@ -4179,7 +4179,7 @@
                </font>
               </property>
               <property name="text">
-               <string>Отказ 2 секции отопителя 3000 вольт</string>
+               <string>Отказ 2 высоковольтного калорифера</string>
               </property>
              </widget>
             </item>
@@ -4191,7 +4191,7 @@
                </font>
               </property>
               <property name="text">
-               <string>Отказ секции отопителя 400 вольт</string>
+               <string>Отказ низковольтного калорифера</string>
               </property>
              </widget>
             </item>
@@ -4365,7 +4365,7 @@
                </font>
               </property>
               <property name="text">
-               <string>Отказ рецирк-ных нагревателей салона</string>
+               <string>Отказ обогревателей тамбура</string>
               </property>
              </widget>
             </item>
@@ -4431,7 +4431,7 @@
                </font>
               </property>
               <property name="text">
-               <string>Отказ 2 лампы обеззараживателя</string>
+               <string>Отказ 2 лампы обеззараживания</string>
               </property>
              </widget>
             </item>
@@ -4563,7 +4563,7 @@
                </font>
               </property>
               <property name="text">
-               <string>Отказ 4 лампы обеззараживателя</string>
+               <string>Отказ 4 лампы обеззараживания</string>
               </property>
              </widget>
             </item>
@@ -4923,7 +4923,7 @@
                </font>
               </property>
               <property name="text">
-               <string>Отказ 5 лампы обеззараживателя</string>
+               <string>Отказ 5 лампы обеззараживания</string>
               </property>
              </widget>
             </item>
@@ -4935,7 +4935,7 @@
                </font>
               </property>
               <property name="text">
-               <string>Отказ 1 секции отопителя 3000 вольт</string>
+               <string>Отказ 1 высоковольтного калорифера</string>
               </property>
              </widget>
             </item>
@@ -4947,7 +4947,7 @@
                </font>
               </property>
               <property name="text">
-               <string>Отказ 2 датчика давления конденсации</string>
+               <string>Отказ 2 датчика давления нагнетания</string>
               </property>
              </widget>
             </item>
@@ -4959,7 +4959,7 @@
                </font>
               </property>
               <property name="text">
-               <string>Отказ 6 лампы обеззараживателя</string>
+               <string>Отказ 6 лампы обеззараживания</string>
               </property>
              </widget>
             </item>
@@ -5079,7 +5079,7 @@
                </font>
               </property>
               <property name="text">
-               <string>Отказ 1 лампы обеззараживателя</string>
+               <string>Отказ 1 лампы обеззараживания</string>
               </property>
              </widget>
             </item>
