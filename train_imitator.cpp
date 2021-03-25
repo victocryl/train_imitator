@@ -15,7 +15,6 @@ train_imitator::train_imitator(QWidget *parent)
     can_arrays_init();  // инициализируем нулями массивы can
     memset(input_errors, 0, 8);   // хранит ошибки ввода данных
     timers_init();      // инициализация и запуск таймеров
-    date_retr();        // считываем дату, загружаем в массив tx_time и выводим в шапку интерфейса
 
     connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(tab_commands())); // кнопка "задать параметры"
 

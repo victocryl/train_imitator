@@ -33,8 +33,8 @@ uint8_t train_imitator::sys_date_retr(void)
      }
      else
      {  // если прошли проверку
-         tx_time[AH] = (year>>8);
-         tx_time[AL] = year;
+         tx_time[AL] = (year>>8);
+         tx_time[AH] = year;
          tx_time[BH] = month;
          tx_time[BL] = day;
 
